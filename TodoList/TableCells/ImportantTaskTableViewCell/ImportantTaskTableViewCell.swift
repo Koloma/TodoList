@@ -9,7 +9,7 @@ import UIKit
 
 class ImportantTaskTableViewCell: UITableViewCell {
 
-	private let importantTaskCellModelInput: IImportantTaskCellModelInput
+	private var importantTaskCellModelInput: IImportantTaskCellModelInput? = nil
 
 	@IBOutlet weak var taskTitleLabel: UILabel!
 	@IBOutlet weak var completeSwitch: UISwitch!
@@ -17,24 +17,17 @@ class ImportantTaskTableViewCell: UITableViewCell {
 
 	static let reuseCellID = String(describing: ImportantTaskTableViewCell.self)
 	static let nib = UINib(nibName: reuseCellID, bundle: nil)
+	static let cellHight = 90.0
 
-    override func awakeFromNib() {
-        super.awakeFromNib()
-    }
-
-	init (importantTaskCellModelInput: IImportantTaskCellModelInput){
+	public func config (importantTaskCellModelInput: IImportantTaskCellModelInput){
 		self.importantTaskCellModelInput = importantTaskCellModelInput
 		taskTitleLabel.text = importantTaskCellModelInput.title
 		completeSwitch.isOn = importantTaskCellModelInput.completed
-
-		super.init()
 		backgroundColor = importantTaskCellModelInput.colorFailedDeadLine
 	}
 
-	required init?(coder: NSCoder) {
-		fatalError("init(coder:) has not been implemented")
-	}
 
 	@IBAction func completeSwitchChange(_ sender: UISwitch) {
+		print(sender.isOn)
 	}
 }

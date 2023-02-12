@@ -14,7 +14,7 @@ protocol IImportantTaskCellModelInput {
 	var colorFailedDeadLine: UIColor { get }
 }
 
-struct ImportantTaskCellModel: IImportantTaskCellModelInput {
+struct ImportantTaskCellModelInput: IImportantTaskCellModelInput {
 	var completed: Bool
 	var title: String
 	var deadLine: String

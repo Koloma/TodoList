@@ -9,7 +9,7 @@ import UIKit
 
 class RegularTaskTableViewCell: UITableViewCell {
 
-	private let regularTaskCellModel: IRegularTaskCellModelInput
+	private var regularTaskCellModel: IRegularTaskCellModelInput? = nil
 
 	@IBOutlet private weak var taskTitleLabel: UILabel!
 	@IBOutlet private weak var completeTaskSwitch: UISwitch!
@@ -17,24 +17,14 @@ class RegularTaskTableViewCell: UITableViewCell {
 	static let reuseCellID = String(describing: RegularTaskTableViewCell.self)
 	static let nib = UINib(nibName: reuseCellID, bundle: nil)
 
-
-	init (regularTaskCellModel: IRegularTaskCellModelInput){
+	public func config(regularTaskCellModel: IRegularTaskCellModelInput) {
 		self.regularTaskCellModel = regularTaskCellModel
 		taskTitleLabel.text = regularTaskCellModel.title
 		completeTaskSwitch.isOn = regularTaskCellModel.completed
-		super.init()
 	}
-
-	required init?(coder: NSCoder) {
-		fatalError("init(coder:) has not been implemented")
-	}
-
-	override func awakeFromNib() {
-        super.awakeFromNib()
-
-    }
 
 	@IBAction func completeSwitchChange(_ sender: UISwitch) {
+		print(sender.isOn)
 	}
 
     

@@ -18,7 +18,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 		let window = UIWindow(windowScene: windowScene)
 		let taskList = TaskManager.CreateMockTaskList()
 		let viewController = MainScreenViewController(
-			mainScreenViewModel: MainScreenViewModel(taskList: taskList)
+			taskManager: TaskManager(tasks: taskList)
 		)
 		window.rootViewController = viewController
 		self.window = window

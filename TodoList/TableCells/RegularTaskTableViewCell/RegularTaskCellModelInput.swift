@@ -13,11 +13,11 @@ protocol IRegularTaskCellModelInput {
 }
 
 
-struct RegularTaskCellModel: IRegularTaskCellModelInput {
+struct RegularTaskCellModelInput: IRegularTaskCellModelInput {
 	var completed: Bool
 	var title: String
 
-	init(task: ImportantTask) {
+	init(task: RegularTask) {
 		self.completed = task.completed
 		self.title = task.title
 	}
