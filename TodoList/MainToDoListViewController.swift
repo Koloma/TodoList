@@ -1,5 +1,5 @@
 //
-//  ViewController.swift
+//  MainToDoListViewController.swift
 //  TodoList
 //
 //  Created by Коломенский Александр on 12.02.2023.
@@ -7,11 +7,12 @@
 
 import UIKit
 
-class ViewController: UIViewController {
+class MainToDoListViewController: UIViewController {
 
+	// MARK: viewDidLoad
 	override func viewDidLoad() {
 		super.viewDidLoad()
-		// Do any additional setup after loading the view.
+		view.backgroundColor = .blue
 	}
 
 
