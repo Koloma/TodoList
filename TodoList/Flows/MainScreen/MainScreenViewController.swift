@@ -46,12 +46,10 @@ class MainScreenViewController: UIViewController {
 
 	}
 	private func initView() {
-
 		view.addSubview(tableView)
 		tableView.snp.makeConstraints { make in
 			make.edges.equalToSuperview()
 		}
-		tableView.backgroundColor = .blue
 	}
 }
 
@@ -67,40 +65,33 @@ extension MainScreenViewController: UITableViewDataSource, UITableViewDelegate {
 
 	func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
 		switch taskList[indexPath.row] {
-		case is RegularTask:
-			if let cell = tableView.dequeueReusableCell(
+		case let task where task is RegularTask:
+			guard let cell = tableView.dequeueReusableCell(
 				withIdentifier: RegularTaskTableViewCell.reuseCellID
 				, for: indexPath
 			) as? RegularTaskTableViewCell
-				, let task = taskList[indexPath.row] as? RegularTask {
+			else { return UITableViewCell()}
 				cell.config(
-					regularTaskCellModel: RegularTaskCellModelInput(
-						task: task)
+						model: RegularTaskCellModelInput(
+						task: task as! RegularTask)
 				)
 				return cell
-			}
-			else {
-				return UITableViewCell()
-			}
-		case is ImportantTask:
-			if let cell = tableView.dequeueReusableCell(
+
+		case let task where task is ImportantTask:
+			guard let cell = tableView.dequeueReusableCell(
 				withIdentifier: ImportantTaskTableViewCell.reuseCellID
 				, for: indexPath
 			) as? ImportantTaskTableViewCell
-				, let task = taskList[indexPath.row] as? ImportantTask {
+			else { return UITableViewCell()}
 				cell.config(
-					importantTaskCellModelInput: ImportantTaskCellModelInput(
-						task: task)
+						model: ImportantTaskCellModelInput(
+						task: task as! ImportantTask)
 				)
 				return cell
-			}
-			else {
-				return UITableViewCell()
-			}
 		default:
-			print("Uncnown Task")
+			return UITableViewCell()
 		}
-		return UITableViewCell()
+
 	}
 
 }

@@ -19,11 +19,12 @@ class ImportantTaskTableViewCell: UITableViewCell {
 	static let nib = UINib(nibName: reuseCellID, bundle: nil)
 	static let cellHight = 90.0
 
-	public func config (importantTaskCellModelInput: IImportantTaskCellModelInput){
-		self.importantTaskCellModelInput = importantTaskCellModelInput
-		taskTitleLabel.text = importantTaskCellModelInput.title
-		completeSwitch.isOn = importantTaskCellModelInput.completed
-		backgroundColor = importantTaskCellModelInput.colorFailedDeadLine
+	public func config (model: IImportantTaskCellModelInput){
+		self.importantTaskCellModelInput = model
+		taskTitleLabel.text = model.title
+		completeSwitch.isOn = model.completed
+		deadLineLabel.text = model.deadLine
+		backgroundColor = model.colorFailedDeadLine
 	}
 
 

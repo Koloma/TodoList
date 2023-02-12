@@ -17,10 +17,10 @@ class RegularTaskTableViewCell: UITableViewCell {
 	static let reuseCellID = String(describing: RegularTaskTableViewCell.self)
 	static let nib = UINib(nibName: reuseCellID, bundle: nil)
 
-	public func config(regularTaskCellModel: IRegularTaskCellModelInput) {
-		self.regularTaskCellModel = regularTaskCellModel
-		taskTitleLabel.text = regularTaskCellModel.title
-		completeTaskSwitch.isOn = regularTaskCellModel.completed
+	public func config(model: IRegularTaskCellModelInput) {
+		self.regularTaskCellModel = model
+		taskTitleLabel.text = model.title
+		completeTaskSwitch.isOn = model.completed
 	}
 
 	@IBAction func completeSwitchChange(_ sender: UISwitch) {
