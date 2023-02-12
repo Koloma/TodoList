@@ -9,15 +9,33 @@ import UIKit
 
 class RegularTaskTableViewCell: UITableViewCell {
 
-    override func awakeFromNib() {
+	private let regularTaskCellModel: IRegularTaskCellModelInput
+
+	@IBOutlet private weak var taskTitleLabel: UILabel!
+	@IBOutlet private weak var completeTaskSwitch: UISwitch!
+
+	static let reuseCellID = String(describing: RegularTaskTableViewCell.self)
+	static let nib = UINib(nibName: reuseCellID, bundle: nil)
+
+
+	init (regularTaskCellModel: IRegularTaskCellModelInput){
+		self.regularTaskCellModel = regularTaskCellModel
+		taskTitleLabel.text = regularTaskCellModel.title
+		completeTaskSwitch.isOn = regularTaskCellModel.completed
+		super.init()
+	}
+
+	required init?(coder: NSCoder) {
+		fatalError("init(coder:) has not been implemented")
+	}
+
+	override func awakeFromNib() {
         super.awakeFromNib()
-        // Initialization code
+
     }
 
-    override func setSelected(_ selected: Bool, animated: Bool) {
-        super.setSelected(selected, animated: animated)
+	@IBAction func completeSwitchChange(_ sender: UISwitch) {
+	}
 
-        // Configure the view for the selected state
-    }
     
 }
