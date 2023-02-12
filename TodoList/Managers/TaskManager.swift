@@ -7,7 +7,15 @@
 
 import Foundation
 
-final class TaskManager {
+protocol ITaskManager {
+	func allTasks() -> [ITask]
+	func completedTasks() -> [ITask]
+	func notCompletedTasks() -> [ITask]
+	func addTask(task: ITask)
+	func delTask (task: ITask)
+}
+
+final class TaskManager: ITaskManager {
 
 	private var tasks:[ITask] = []
 
@@ -37,7 +45,7 @@ final class TaskManager {
 }
 
 extension TaskManager {
-	static func CreateMockTaskList() -> [Task] {
+	static func CreateMockTaskList() -> [ITask] {
 		return  [ RegularTask(title: "RegTask 1")
 				  ,ImportantTask(title: "ImportantTask 1", taskPriority: .low)
 				  ,RegularTask(title: "RegTask 2")
