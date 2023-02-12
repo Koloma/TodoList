@@ -20,14 +20,15 @@ class ImportantTaskTableViewCell: UITableViewCell {
 
     override func awakeFromNib() {
         super.awakeFromNib()
-        // Initialization code
     }
 
 	init (importantTaskCellModelInput: IImportantTaskCellModelInput){
 		self.importantTaskCellModelInput = importantTaskCellModelInput
 		taskTitleLabel.text = importantTaskCellModelInput.title
 		completeSwitch.isOn = importantTaskCellModelInput.completed
+
 		super.init()
+		backgroundColor = importantTaskCellModelInput.colorFailedDeadLine
 	}
 
 	required init?(coder: NSCoder) {
