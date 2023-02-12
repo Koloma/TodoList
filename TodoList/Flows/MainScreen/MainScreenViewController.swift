@@ -14,6 +14,13 @@ class MainScreenViewController: UIViewController {
 	private var taskManager: ITaskManager? = nil
 	private var taskList: [ITask] = []
 
+	private let segmentedControl: UISegmentedControl = {
+		let items = ["All", "Not completed", "Completed"]
+		let segmentControl = UISegmentedControl(items: items)
+		segmentControl.selectedSegmentIndex = 0
+		return segmentControl
+	}()
+
 	init(taskManager: ITaskManager) {
 
 		self.taskManager = taskManager
@@ -35,8 +42,6 @@ class MainScreenViewController: UIViewController {
 
 	private func initTableView() {
 		tableView.dataSource = self
-
-
 		tableView.register(
 			RegularTaskTableViewCell.nib
 			, forCellReuseIdentifier: RegularTaskTableViewCell.reuseCellID)
@@ -46,10 +51,34 @@ class MainScreenViewController: UIViewController {
 
 	}
 	private func initView() {
+		view.backgroundColor = .systemBackground
+
+		segmentedControl.addTarget(self, action: #selector(segmentedControlValueChanged(_:)), for: .valueChanged)
+		view.addSubview(segmentedControl)
+		segmentedControl.snp.makeConstraints { make in
+			make.left.right.equalTo(view)
+			make.top.equalTo(self.view.safeAreaLayoutGuide.snp.top)
+
+		}
 		view.addSubview(tableView)
 		tableView.snp.makeConstraints { make in
-			make.edges.equalToSuperview()
+			make.top.equalTo(segmentedControl.snp.bottom).offset(15)
+			make.left.right.bottom.equalTo(view)
 		}
+	}
+
+	@objc func segmentedControlValueChanged(_ sender: UISegmentedControl) {
+		switch sender.selectedSegmentIndex {
+		case 0:
+			taskList = taskManager?.allTasks() ?? []
+		case 1:
+			taskList = taskManager?.notCompletedTasks() ?? []
+		case 2:
+			taskList = taskManager?.completedTasks() ?? []
+		default:
+			taskList = []
+		}
+		tableView.reloadData()
 	}
 }
 
