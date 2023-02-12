@@ -29,6 +29,9 @@
                             </label>
                             <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Imt-bC-0T2">
                                 <rect key="frame" x="368" y="19.999999999999996" width="51" height="34.666666666666657"/>
+                                <connections>
+                                    <action selector="completeSwitchChange:" destination="KGk-i7-Jjw" eventType="valueChanged" id="jN1-Hp-xZJ"/>
+                                </connections>
                             </switch>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="mhh-6l-mP4" userLabel="DeadLineLabel">
                                 <rect key="frame" x="20" y="49" width="340" height="21"/>

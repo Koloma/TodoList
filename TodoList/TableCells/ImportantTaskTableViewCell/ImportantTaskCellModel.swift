@@ -34,6 +34,5 @@ struct ImportantTaskCellModelInput: IImportantTaskCellModelInput {
 			self.colorFailedDeadLine = .systemPink
 		}
 	}
-
 }
 

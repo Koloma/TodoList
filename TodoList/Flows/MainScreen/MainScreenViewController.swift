@@ -13,9 +13,32 @@ class MainScreenViewController: UIViewController {
 	private let tableView: UITableView = UITableView()
 	private var taskManager: ITaskManager? = nil
 	private var taskList: [ITask] = []
+	private var currentTaskListStates: TaskListState = .all {
+		didSet {
+			tableReloadData()
+		}
+	}
 
+	private func tableReloadData() {
+		switch currentTaskListStates {
+		case .all:
+			taskList = taskManager?.allTasks() ?? []
+		case .notCompleted:
+			taskList = taskManager?.notCompletedTasks() ?? []
+		case .completed:
+			taskList = taskManager?.completedTasks() ?? []
+		}
+		tableView.reloadData()
+	}
+
+	private enum TaskListState: String, CaseIterable {
+		case all = "All"
+		case notCompleted = "Not completed"
+		case completed = "Completed"
+	}
 	private let segmentedControl: UISegmentedControl = {
-		let items = ["All", "Not completed", "Completed"]
+
+		let items = TaskListState.allCases.map { $0.rawValue }
 		let segmentControl = UISegmentedControl(items: items)
 		segmentControl.selectedSegmentIndex = 0
 		return segmentControl
@@ -70,16 +93,17 @@ class MainScreenViewController: UIViewController {
 	@objc func segmentedControlValueChanged(_ sender: UISegmentedControl) {
 		switch sender.selectedSegmentIndex {
 		case 0:
-			taskList = taskManager?.allTasks() ?? []
+			currentTaskListStates = .all
 		case 1:
-			taskList = taskManager?.notCompletedTasks() ?? []
+			currentTaskListStates = .notCompleted
 		case 2:
-			taskList = taskManager?.completedTasks() ?? []
+			currentTaskListStates = .completed
 		default:
 			taskList = []
+			currentTaskListStates = .all
 		}
-		tableView.reloadData()
 	}
+
 }
 
 extension MainScreenViewController: UITableViewDataSource, UITableViewDelegate {
@@ -95,7 +119,7 @@ extension MainScreenViewController: UITableViewDataSource, UITableViewDelegate {
 		case is ImportantTask:
 			return ImportantTaskTableViewCell.cellHeight
 		default :
-			return 10
+			return 50
 		}
 	}
 
@@ -110,6 +134,11 @@ extension MainScreenViewController: UITableViewDataSource, UITableViewDelegate {
 				cell.config(
 						model: RegularTaskCellModelInput(
 						task: task as! RegularTask)
+						,modelOutput: { [weak self] value in
+							guard let self = self else { return }
+							task.setCompleted(value)
+							self.tableReloadData()
+						}
 				)
 				return cell
 
@@ -122,6 +151,11 @@ extension MainScreenViewController: UITableViewDataSource, UITableViewDelegate {
 				cell.config(
 						model: ImportantTaskCellModelInput(
 						task: task as! ImportantTask)
+						,modelOutput: { [weak self] value in
+							guard let self = self else { return }
+							task.setCompleted(value)
+							self.tableReloadData()
+						}
 				)
 				return cell
 		default:
