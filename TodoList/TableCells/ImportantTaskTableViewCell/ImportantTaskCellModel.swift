@@ -29,7 +29,7 @@ struct ImportantTaskCellModelInput: IImportantTaskCellModelInput {
 		dateFormatter.dateFormat = "E, hh:mm dd.MM.YYYY"
 		self.deadLine = dateFormatter.string(from: task.deadLine)
 		if (task.deadLine >= Date()) {
-			self.colorFailedDeadLine = .systemBlue
+			self.colorFailedDeadLine = .systemBackground
 		} else {
 			self.colorFailedDeadLine = .systemPink
 		}
