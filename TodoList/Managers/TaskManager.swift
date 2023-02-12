@@ -46,13 +46,15 @@ final class TaskManager: ITaskManager {
 
 extension TaskManager {
 	static func CreateMockTaskList() -> [ITask] {
+		let task = RegularTask(title: "RegTask 2")
+			task.setCompleted(true)
 		return  [ RegularTask(title: "RegTask 1")
 				  ,ImportantTask(
 					title: "ImportantTask 1"
 					, taskPriority: .low
 					, date: Date(timeIntervalSinceNow: -1000000)
 				  )
-				  ,RegularTask(title: "RegTask 2")
+				  ,task
 				  ,RegularTask(title: "RegTask 3")
 				  ,ImportantTask(title: "ImportantTask 2", taskPriority: .high)
 				  ,ImportantTask(title: "ImportantTask 2", taskPriority: .medium)
