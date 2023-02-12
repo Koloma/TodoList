@@ -1,17 +1,19 @@
 //
-//  ViewController.swift
+//  MainScreenViewController.swift
 //  TodoList
 //
 //  Created by Коломенский Александр on 12.02.2023.
 //
 
 import UIKit
+import SnapKit
 
-class ViewController: UIViewController {
+class MainScreenViewController: UIViewController {
 
+	// MARK: viewDidLoad
 	override func viewDidLoad() {
 		super.viewDidLoad()
-		// Do any additional setup after loading the view.
+		view.backgroundColor = .blue
 	}
 
 
