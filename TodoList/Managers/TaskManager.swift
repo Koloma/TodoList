@@ -50,7 +50,7 @@ extension TaskManager {
 				  ,ImportantTask(
 					title: "ImportantTask 1"
 					, taskPriority: .low
-					, date: Date(timeIntervalSinceNow: -10000000)
+					, date: Date(timeIntervalSinceNow: -1000000)
 				  )
 				  ,RegularTask(title: "RegTask 2")
 				  ,RegularTask(title: "RegTask 3")

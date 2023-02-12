@@ -8,26 +8,27 @@
 import UIKit
 
 class ImportantTaskTableViewCell: UITableViewCell {
-
+	
 	private var importantTaskCellModelInput: IImportantTaskCellModelInput? = nil
-
+	
+	@IBOutlet weak var view: UIView!
 	@IBOutlet weak var taskTitleLabel: UILabel!
 	@IBOutlet weak var completeSwitch: UISwitch!
 	@IBOutlet weak var deadLineLabel: UILabel!
-
+	
 	static let reuseCellID = String(describing: ImportantTaskTableViewCell.self)
 	static let nib = UINib(nibName: reuseCellID, bundle: nil)
-	static let cellHight = 90.0
-
+	static let cellHeight = 80.0
+	
 	public func config (model: IImportantTaskCellModelInput){
 		self.importantTaskCellModelInput = model
 		taskTitleLabel.text = model.title
 		completeSwitch.isOn = model.completed
 		deadLineLabel.text = model.deadLine
-		backgroundColor = model.colorFailedDeadLine
+		view.backgroundColor = model.colorFailedDeadLine
 	}
-
-
+	
+	
 	@IBAction func completeSwitchChange(_ sender: UISwitch) {
 		print(sender.isOn)
 	}

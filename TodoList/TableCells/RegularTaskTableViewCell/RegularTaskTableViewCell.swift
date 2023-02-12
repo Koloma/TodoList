@@ -13,9 +13,11 @@ class RegularTaskTableViewCell: UITableViewCell {
 
 	@IBOutlet private weak var taskTitleLabel: UILabel!
 	@IBOutlet private weak var completeTaskSwitch: UISwitch!
+	@IBOutlet weak var view: UIView!
 
 	static let reuseCellID = String(describing: RegularTaskTableViewCell.self)
 	static let nib = UINib(nibName: reuseCellID, bundle: nil)
+	static let cellHeight = 50.0
 
 	public func config(model: IRegularTaskCellModelInput) {
 		self.regularTaskCellModel = model
@@ -23,9 +25,9 @@ class RegularTaskTableViewCell: UITableViewCell {
 		completeTaskSwitch.isOn = model.completed
 	}
 
+
 	@IBAction func completeSwitchChange(_ sender: UISwitch) {
 		print(sender.isOn)
 	}
 
-    
 }

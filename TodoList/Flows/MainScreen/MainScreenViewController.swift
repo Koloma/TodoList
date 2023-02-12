@@ -35,7 +35,7 @@ class MainScreenViewController: UIViewController {
 
 	private func initTableView() {
 		tableView.dataSource = self
-		tableView.rowHeight = 80.0
+
 
 		tableView.register(
 			RegularTaskTableViewCell.nib
@@ -60,7 +60,14 @@ extension MainScreenViewController: UITableViewDataSource, UITableViewDelegate {
 	}
 
 	func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-		return 80
+		switch taskList[indexPath.row] {
+		case is RegularTask:
+			return RegularTaskTableViewCell.cellHeight
+		case is ImportantTask:
+			return ImportantTaskTableViewCell.cellHeight
+		default :
+			return 10
+		}
 	}
 
 	func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {

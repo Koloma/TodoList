@@ -26,8 +26,8 @@ struct ImportantTaskCellModelInput: IImportantTaskCellModelInput {
 
 		let dateFormatter = DateFormatter()
 		dateFormatter.locale = Locale(identifier: "ru_RU")
+		dateFormatter.dateFormat = "E, hh:mm dd.MM.YYYY"
 		self.deadLine = dateFormatter.string(from: task.deadLine)
-
 		if (task.deadLine >= Date()) {
 			self.colorFailedDeadLine = .systemBlue
 		} else {
