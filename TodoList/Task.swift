@@ -8,6 +8,7 @@
 import Foundation
 
 protocol ITask {
+	var createDate: Date { get }
 	var completed: Bool { get }
 	var title: String { get }
 	func setCompleted(_ state: Bool)
@@ -15,12 +16,14 @@ protocol ITask {
 
 class Task: ITask {
 
+	private(set) var createDate: Date
 	private(set) var completed: Bool
 	private(set) var title: String
 
-	init(title: String) {
+	init(title: String, date: Date? = nil) {
 		self.title = title
 		self.completed = false
+		self.createDate = date ?? Date()
 	}
 
 	func setCompleted(_ state: Bool) {
@@ -54,23 +57,23 @@ final class ImportantTask: Task {
 			return Calendar.current.date(
 				byAdding: .day
 				,value: TaskPriorityDayCount.low.rawValue
-				,to: Date())!
+				,to: createDate)!
 		case .medium:
 			return Calendar.current.date(
 				byAdding: .day
 				,value: TaskPriorityDayCount.medium.rawValue
-				,to: Date())!
+				,to: createDate)!
 		case .high:
 			return Calendar.current.date(
 				byAdding: .day
 				,value: TaskPriorityDayCount.hight.rawValue
-				,to: Date())!
+				,to: createDate)!
 		}
 	}
 
-	init(title: String, taskPriority: TaskPriority) {
+	init(title: String, taskPriority: TaskPriority, date: Date? = nil) {
 		self.taskPriority = taskPriority
-		super.init(title: title)
+		super.init(title: title, date: date)
 	}
 }
 
