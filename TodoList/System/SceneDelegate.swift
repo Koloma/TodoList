@@ -16,11 +16,13 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
 		guard let windowScene = (scene as? UIWindowScene) else { return }
 		let window = UIWindow(windowScene: windowScene)
-		let taskList = TaskManager.CreateMockTaskList()
+
+		let taskList = StubRepository().loadTasks()
 		let viewController = MainScreenViewController(
 			taskManager: TaskManager(tasks: taskList)
 		)
 		window.rootViewController = viewController
+		
 		self.window = window
 		window.makeKeyAndVisible()
 

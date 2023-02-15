@@ -6,54 +6,20 @@
 //
 
 import UIKit
-import SnapKit
 
 class MainScreenViewController: UIViewController {
 
 	private let tableView: UITableView = UITableView()
-	private var taskManager: ITaskManager? = nil
-	private var taskList: [ITask] = []
-	private var currentTaskListStates: TaskListState = .all {
-		didSet {
-			tableReloadData()
-		}
-	}
+	private var taskManager: IMainViewTaskManagerAdapter
 
-	private func tableReloadData() {
-		switch currentTaskListStates {
-		case .all:
-			taskList = taskManager?.allTasks() ?? []
-		case .notCompleted:
-			taskList = taskManager?.notCompletedTasks() ?? []
-		case .completed:
-			taskList = taskManager?.completedTasks() ?? []
-		}
-		tableView.reloadData()
-	}
-
-	private enum TaskListState: String, CaseIterable {
-		case all = "All"
-		case notCompleted = "Not completed"
-		case completed = "Completed"
-	}
-	private let segmentedControl: UISegmentedControl = {
-
-		let items = TaskListState.allCases.map { $0.rawValue }
-		let segmentControl = UISegmentedControl(items: items)
-		segmentControl.selectedSegmentIndex = 0
-		return segmentControl
-	}()
-
-	init(taskManager: ITaskManager) {
-
+	// MARK: init
+	init(taskManager: IMainViewTaskManagerAdapter) {
 		self.taskManager = taskManager
-		self.taskList = taskManager.allTasks()
-
 		super.init(nibName: nil, bundle: nil)
 	}
-	
+
 	required init?(coder: NSCoder) {
-		super.init(coder: coder)
+		fatalError("init(coder:) has not been implemented")
 	}
 	
 	// MARK: viewDidLoad
@@ -63,6 +29,7 @@ class MainScreenViewController: UIViewController {
 		initTableView()
 	}
 
+	// MARK: initViewTableView
 	private func initTableView() {
 		tableView.dataSource = self
 		tableView.register(
@@ -73,58 +40,40 @@ class MainScreenViewController: UIViewController {
 			, forCellReuseIdentifier: ImportantTaskTableViewCell.reuseCellID)
 
 	}
+
+	// MARK: initView
 	private func initView() {
-		view.backgroundColor = .systemBackground
 
-		segmentedControl.addTarget(self, action: #selector(segmentedControlValueChanged(_:)), for: .valueChanged)
-		view.addSubview(segmentedControl)
-		segmentedControl.snp.makeConstraints { make in
-			make.left.right.equalTo(view)
-			make.top.equalTo(self.view.safeAreaLayoutGuide.snp.top)
-
-		}
 		view.addSubview(tableView)
-		tableView.snp.makeConstraints { make in
-			make.top.equalTo(segmentedControl.snp.bottom).offset(15)
-			make.left.right.bottom.equalTo(view)
-		}
+		tableView.translatesAutoresizingMaskIntoConstraints = false
+		tableView.topAnchor.constraint(equalTo: view.topAnchor).isActive = true
+		tableView.leftAnchor.constraint(equalTo: view.leftAnchor).isActive = true
+		tableView.rightAnchor.constraint(equalTo: view.rightAnchor).isActive = true
+		tableView.bottomAnchor.constraint(equalTo: view.bottomAnchor).isActive = true
 	}
-
-	@objc func segmentedControlValueChanged(_ sender: UISegmentedControl) {
-		switch sender.selectedSegmentIndex {
-		case 0:
-			currentTaskListStates = .all
-		case 1:
-			currentTaskListStates = .notCompleted
-		case 2:
-			currentTaskListStates = .completed
-		default:
-			taskList = []
-			currentTaskListStates = .all
-		}
-	}
-
 }
 
+// MARK: extension MainScreenViewController
 extension MainScreenViewController: UITableViewDataSource, UITableViewDelegate {
 
 	func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-		return taskList.count
+		return taskManager.getSectionsItems(section: section).count
 	}
 
 	func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-		switch taskList[indexPath.row] {
-		case is RegularTask:
-			return RegularTaskTableViewCell.cellHeight
-		case is ImportantTask:
-			return ImportantTaskTableViewCell.cellHeight
-		default :
-			return 50
-		}
+			return 80
+	}
+
+	func numberOfSections(in tableView: UITableView) -> Int {
+		taskManager.getSectionsTitles().count
+	}
+
+	func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+		return taskManager.getSectionsTitles()[section]
 	}
 
 	func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-		switch taskList[indexPath.row] {
+		switch taskManager.getSectionsItems(section: indexPath.section)[indexPath.row] {
 		case let task where task is RegularTask:
 			guard let cell = tableView.dequeueReusableCell(
 				withIdentifier: RegularTaskTableViewCell.reuseCellID
@@ -134,10 +83,11 @@ extension MainScreenViewController: UITableViewDataSource, UITableViewDelegate {
 				cell.config(
 						model: RegularTaskCellModelInput(
 						task: task as! RegularTask)
-						,modelOutput: { [weak self] value in
-							guard let self = self else { return }
+						,modelOutput: {[weak self] value in
 							task.setCompleted(value)
-							self.tableReloadData()
+							DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
+								self?.tableView.reloadData()
+							}
 						}
 				)
 				return cell
@@ -151,10 +101,11 @@ extension MainScreenViewController: UITableViewDataSource, UITableViewDelegate {
 				cell.config(
 						model: ImportantTaskCellModelInput(
 						task: task as! ImportantTask)
-						,modelOutput: { [weak self] value in
-							guard let self = self else { return }
+						,modelOutput: {[weak self] value in
 							task.setCompleted(value)
-							self.tableReloadData()
+							DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
+								self?.tableView.reloadData()
+							}
 						}
 				)
 				return cell
