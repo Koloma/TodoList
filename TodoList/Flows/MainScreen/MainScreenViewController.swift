@@ -65,7 +65,8 @@ extension MainScreenViewController: UITableViewDataSource, UITableViewDelegate {
 	}
 
 	func numberOfSections(in tableView: UITableView) -> Int {
-		taskManager.
+		//taskManager. 1
+		return 1
 	}
 
 	func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {

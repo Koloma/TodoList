@@ -1,0 +1,44 @@
+//
+//  Repository.swift
+//  TodoList
+//
+//  Created by Коломенский Александр on 15.02.2023.
+//
+
+import Foundation
+
+/// Протокол для загрузки и сохранения задач
+protocol IRepository {
+	func loadTasks() -> [ITask]
+	func saveTasks(_ tasks: [ITask])
+}
+
+
+/// Mock repository
+final class MockRepository: IRepository {
+
+	/// Загружаем заранее подготовленный список задач
+	/// - Returns: [ITask] список задач
+	func loadTasks() -> [ITask] {
+		let task = RegularTask(title: "RegTask 2")
+		task.setCompleted(true)
+		return  [ RegularTask(title: "RegTask 1")
+				  ,ImportantTask(
+					title: "ImportantTask 1"
+					, taskPriority: .low
+					, date: Date(timeIntervalSinceNow: -1000000)
+				  )
+				  ,task
+				  ,RegularTask(title: "RegTask 3")
+				  ,ImportantTask(title: "ImportantTask 2", taskPriority: .high)
+				  ,ImportantTask(title: "ImportantTask 2", taskPriority: .medium)
+		]
+
+	}
+
+	/// Пустой метод для сохранения список задач
+	func saveTasks(_ tasks: [ITask]) {
+		return
+	}
+
+}

@@ -7,6 +7,7 @@
 
 import Foundation
 
+/// Протокол задач
 protocol ITask {
 	var createDate: Date { get }
 	var completed: Bool { get }
@@ -14,6 +15,7 @@ protocol ITask {
 	func setCompleted(_ state: Bool)
 }
 
+/// Базовый класс задач
 class Task: ITask {
 
 	private(set) var createDate: Date
@@ -32,12 +34,14 @@ class Task: ITask {
 }
 
 
-
+/// Обычные задач
 final class RegularTask: Task { }
 
 
+/// Description
 final class ImportantTask: Task {
 
+	/// <#Description#>
 	enum TaskPriority {
 		case low
 		case medium

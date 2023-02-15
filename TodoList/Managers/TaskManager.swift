@@ -16,7 +16,7 @@ protocol ITaskManager {
 	func delTask (task: ITask)
 }
 
-///Менеджер по управлению списком задач
+/// Менеджер по управлению списком задач
 final class TaskManager: ITaskManager {
 
 	private var tasks:[ITask] = []
@@ -25,49 +25,33 @@ final class TaskManager: ITaskManager {
 		self.tasks = tasks
 	}
 
-	///Возвращает список всех задач
+	/// Возвращает список всех задач
+	/// - Returns: [ITask]
 	func allTasks() -> [ITask] {
 		return tasks
 	}
 
-	///Возвращает список завершенных задач
+	/// Возвращает список завершенных задач
+	/// - Returns: [ITask]
 	func completedTasks() -> [ITask] {
 		return tasks.filter { $0.completed }
 	}
 
-	///Возвращает список не завершенных задач
+	/// Возвращает список не завершенных задач
+	/// - Returns: [ITask]
 	func notCompletedTasks() -> [ITask] {
 		return tasks.filter { !$0.completed }
 	}
 
-	///Добавляет новую задачу к списку задач
+	/// Добавляет новую задачу к списку задач
+	/// - Parameter task: ITask
 	func addTask(task: ITask) {
 		tasks.append(task)
 	}
 
-	///Удаляет задачу из списка задач
+	/// Удаляет задачу из списка задач
+	/// - Parameter task: ITask
 	func delTask (task: ITask) {
 		tasks.removeAll { $0.title == task.title }
 	}
 }
-
-extension TaskManager {
-
-	///Возвращает список задач заглушек для демонстрации
-	static func CreateMockTaskList() -> [ITask] {
-		let task = RegularTask(title: "RegTask 2")
-			task.setCompleted(true)
-		return  [ RegularTask(title: "RegTask 1")
-				  ,ImportantTask(
-					title: "ImportantTask 1"
-					, taskPriority: .low
-					, date: Date(timeIntervalSinceNow: -1000000)
-				  )
-				  ,task
-				  ,RegularTask(title: "RegTask 3")
-				  ,ImportantTask(title: "ImportantTask 2", taskPriority: .high)
-				  ,ImportantTask(title: "ImportantTask 2", taskPriority: .medium)
-		]
-	}
-}
-
