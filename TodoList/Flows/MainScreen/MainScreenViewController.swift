@@ -6,7 +6,6 @@
 //
 
 import UIKit
-import SnapKit
 
 class MainScreenViewController: UIViewController {
 
@@ -78,16 +77,16 @@ class MainScreenViewController: UIViewController {
 
 		segmentedControl.addTarget(self, action: #selector(segmentedControlValueChanged(_:)), for: .valueChanged)
 		view.addSubview(segmentedControl)
-		segmentedControl.snp.makeConstraints { make in
-			make.left.right.equalTo(view)
-			make.top.equalTo(self.view.safeAreaLayoutGuide.snp.top)
-
-		}
+//		segmentedControl.snp.makeConstraints { make in
+//			make.left.right.equalTo(view)
+//			make.top.equalTo(self.view.safeAreaLayoutGuide.snp.top)
+//
+//		}
 		view.addSubview(tableView)
-		tableView.snp.makeConstraints { make in
-			make.top.equalTo(segmentedControl.snp.bottom).offset(15)
-			make.left.right.bottom.equalTo(view)
-		}
+//		tableView.snp.makeConstraints { make in
+//			make.top.equalTo(segmentedControl.snp.bottom).offset(15)
+//			make.left.right.bottom.equalTo(view)
+//		}
 	}
 
 	@objc func segmentedControlValueChanged(_ sender: UISegmentedControl) {
