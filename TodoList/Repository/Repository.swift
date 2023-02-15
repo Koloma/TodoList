@@ -13,9 +13,8 @@ protocol IRepository {
 	func saveTasks(_ tasks: [ITask])
 }
 
-
-/// Mock repository
-final class MockRepository: IRepository {
+/// Stub repository
+final class StubRepository: IRepository {
 
 	/// Загружаем заранее подготовленный список задач
 	/// - Returns: [ITask] список задач
@@ -33,12 +32,10 @@ final class MockRepository: IRepository {
 				  ,ImportantTask(title: "ImportantTask 2", taskPriority: .high)
 				  ,ImportantTask(title: "ImportantTask 2", taskPriority: .medium)
 		]
-
 	}
 
-	/// Пустой метод для сохранения список задач
+	/// Заглушка  для сохранения списка задач
 	func saveTasks(_ tasks: [ITask]) {
 		return
 	}
-
 }

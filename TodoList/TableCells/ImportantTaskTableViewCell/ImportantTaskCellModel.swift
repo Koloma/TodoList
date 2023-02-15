@@ -22,7 +22,7 @@ struct ImportantTaskCellModelInput: IImportantTaskCellModelInput {
 
 	init(task: ImportantTask) {
 		self.completed = task.completed
-		self.title = task.title
+		self.title = "[\(task.taskPriority)] \(task.title)"
 
 		let dateFormatter = DateFormatter()
 		dateFormatter.locale = Locale(identifier: "ru_RU")

@@ -10,10 +10,10 @@ import UIKit
 class MainScreenViewController: UIViewController {
 
 	private let tableView: UITableView = UITableView()
-	private var taskManager: ITaskManager
+	private var taskManager: IMainViewTaskManagerAdapter
 
 	// MARK: init
-	init(taskManager: ITaskManager) {
+	init(taskManager: IMainViewTaskManagerAdapter) {
 		self.taskManager = taskManager
 		super.init(nibName: nil, bundle: nil)
 	}
@@ -57,7 +57,7 @@ class MainScreenViewController: UIViewController {
 extension MainScreenViewController: UITableViewDataSource, UITableViewDelegate {
 
 	func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-		return taskManager.allTasks().count
+		return taskManager.getSectionsItems(section: section).count
 	}
 
 	func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
@@ -65,12 +65,15 @@ extension MainScreenViewController: UITableViewDataSource, UITableViewDelegate {
 	}
 
 	func numberOfSections(in tableView: UITableView) -> Int {
-		//taskManager. 1
-		return 1
+		taskManager.getSectionsTitles().count
+	}
+
+	func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+		return taskManager.getSectionsTitles()[section]
 	}
 
 	func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-		switch taskManager.allTasks()[indexPath.row] {
+		switch taskManager.getSectionsItems(section: indexPath.section)[indexPath.row] {
 		case let task where task is RegularTask:
 			guard let cell = tableView.dequeueReusableCell(
 				withIdentifier: RegularTaskTableViewCell.reuseCellID
@@ -80,8 +83,11 @@ extension MainScreenViewController: UITableViewDataSource, UITableViewDelegate {
 				cell.config(
 						model: RegularTaskCellModelInput(
 						task: task as! RegularTask)
-						,modelOutput: { value in
+						,modelOutput: {[weak self] value in
 							task.setCompleted(value)
+							DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
+								self?.tableView.reloadData()
+							}
 						}
 				)
 				return cell
@@ -95,8 +101,11 @@ extension MainScreenViewController: UITableViewDataSource, UITableViewDelegate {
 				cell.config(
 						model: ImportantTaskCellModelInput(
 						task: task as! ImportantTask)
-						,modelOutput: { value in
+						,modelOutput: {[weak self] value in
 							task.setCompleted(value)
+							DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
+								self?.tableView.reloadData()
+							}
 						}
 				)
 				return cell
