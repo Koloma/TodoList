@@ -7,6 +7,7 @@
 
 import Foundation
 
+///Протокол менеджеров управления задачами
 protocol ITaskManager {
 	func allTasks() -> [ITask]
 	func completedTasks() -> [ITask]
@@ -44,7 +45,7 @@ final class TaskManager: ITaskManager {
 		tasks.append(task)
 	}
 
-	//Удаляет задачу из списка задач
+	///Удаляет задачу из списка задач
 	func delTask (task: ITask) {
 		tasks.removeAll { $0.title == task.title }
 	}

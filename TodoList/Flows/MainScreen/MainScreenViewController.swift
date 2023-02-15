@@ -21,7 +21,6 @@ class MainScreenViewController: UIViewController {
 	required init?(coder: NSCoder) {
 		fatalError("init(coder:) has not been implemented")
 	}
-
 	
 	// MARK: viewDidLoad
 	override func viewDidLoad() {
@@ -51,10 +50,7 @@ class MainScreenViewController: UIViewController {
 		tableView.leftAnchor.constraint(equalTo: view.leftAnchor).isActive = true
 		tableView.rightAnchor.constraint(equalTo: view.rightAnchor).isActive = true
 		tableView.bottomAnchor.constraint(equalTo: view.bottomAnchor).isActive = true
-
 	}
-
-
 }
 
 // MARK: extension MainScreenViewController
@@ -65,13 +61,11 @@ extension MainScreenViewController: UITableViewDataSource, UITableViewDelegate {
 	}
 
 	func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-//		switch taskList[indexPath.row] {
-//		case is RegularTask:
-//			return RegularTaskTableViewCell.cellHeight
-//		case is ImportantTask:
-//			return ImportantTaskTableViewCell.cellHeight
-//		default :
 			return 80
+	}
+
+	func numberOfSections(in tableView: UITableView) -> Int {
+		taskManager.
 	}
 
 	func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
