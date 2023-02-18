@@ -16,13 +16,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 		guard let windowScene = (scene as? UIWindowScene) else { return }
 		let window = UIWindow(windowScene: windowScene)
 
-		let taskList = TaskRepositoryStub().loadTasks()
-		let taskManager = OrderedTaskManager(taskManager: TaskManager(tasks: taskList))
-		let sectionForTaskManagerAdapter = SectionForTaskManagerAdapter(taskManager: taskManager)
-		let viewController = MainScreenViewController(
-			sectionForTaskManager: sectionForTaskManagerAdapter
-		)
-		window.rootViewController = viewController
+		window.rootViewController = MainScreenUnitBuilder.createVMPUnit()
 		
 		self.window = window
 		window.makeKeyAndVisible()

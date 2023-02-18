@@ -7,30 +7,39 @@
 
 import Foundation
 
-/// Менеджер задач с сортировкой
+/// Менеджер задач с сортировкой.
 final class OrderedTaskManager: ITaskManager {
-	let taskManager: ITaskManager
+	private let taskManager: ITaskManager
 
+
+	/// Инициализатор OrderedTaskManager.
+	/// - Parameter taskManager
 	init(taskManager: ITaskManager) {
 		self.taskManager = taskManager
 	}
 
+
+	/// Возвращает список всех отсортированных задач.
 	func allTasks() -> [ITask] {
 		return sorted(tasks: taskManager.allTasks())
 	}
 
+	/// Возвращает список всех отсортированных  выполненных задач.
 	func completedTasks() -> [ITask] {
 		return sorted(tasks: taskManager.completedTasks())
 	}
 
+	/// Возвращает список всех отсортированных невыполненных задач.
 	func notCompletedTasks() -> [ITask] {
 		return sorted(tasks: taskManager.notCompletedTasks())
 	}
 
+	/// Добавить задачу в список задач.
 	func addTask(task: ITask) {
 		taskManager.addTask(task: task)
 	}
 
+	/// Удалить задачу и списка задач.
 	func delTask(task: ITask) {
 		taskManager.delTask(task: task)
 	}

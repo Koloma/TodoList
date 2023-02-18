@@ -7,6 +7,7 @@
 
 import UIKit
 
+// MARK: RegularTaskTableViewCell
 class RegularTaskTableViewCell: UITableViewCell {
 
 	private var regularTaskCellModel: IRegularTaskCellModelInput? = nil

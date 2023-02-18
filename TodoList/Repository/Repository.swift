@@ -7,15 +7,15 @@
 
 import Foundation
 
-/// Протокол для загрузки и сохранения задач
+/// Протокол для загрузки данных из хранилища.
 protocol IRepository {
 	func loadTasks() -> [ITask]
 }
 
-/// Stub repository
+/// Stub repository.
 final class TaskRepositoryStub: IRepository {
 
-	/// Загружаем заранее подготовленный список задач
+	/// Загружаем заранее подготовленный список задач.
 	/// - Returns: [ITask] список задач
 	func loadTasks() -> [ITask] {
 		let task = RegularTask(title: "RegTask 2")

@@ -10,17 +10,9 @@ import UIKit
 class MainScreenViewController: UIViewController {
 
 	private let tableView: UITableView = UITableView()
-	private var sectionForTaskManager: ISectionForTaskManagerAdapter
 
-	// MARK: init
-	init(sectionForTaskManager: ISectionForTaskManagerAdapter) {
-		self.sectionForTaskManager = sectionForTaskManager
-		super.init(nibName: nil, bundle: nil)
-	}
+	var presenter: IMainScreenPresenter!
 
-	required init?(coder: NSCoder) {
-		fatalError("init(coder:) has not been implemented")
-	}
 	
 	// MARK: viewDidLoad
 	override func viewDidLoad() {
@@ -43,7 +35,6 @@ class MainScreenViewController: UIViewController {
 
 	// MARK: initView
 	private func initView() {
-
 		view.addSubview(tableView)
 		tableView.translatesAutoresizingMaskIntoConstraints = false
 		tableView.topAnchor.constraint(equalTo: view.topAnchor).isActive = true
@@ -53,27 +44,42 @@ class MainScreenViewController: UIViewController {
 	}
 }
 
+// MARK: extension MainScreenViewController: IMainScreenView
+extension MainScreenViewController: IMainScreenView {
+	func render(viewData: ViewData) {
+		tableView.reloadData()
+	}
+}
+
 // MARK: extension MainScreenViewController
 extension MainScreenViewController: UITableViewDataSource, UITableViewDelegate {
 
 	func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-		return sectionForTaskManager.getSectionsItems(section: section).count
+		return presenter.viewData.sectionsItems[section].count
 	}
 
 	func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-			return 80
+		let defaultHeightForRow = 80.0
+		switch presenter.viewData.sectionsItems[indexPath.section][indexPath.row] {
+		case is RegularTask:
+			return RegularTaskTableViewCell.cellHeight
+		case is ImportantTask:
+			return ImportantTaskTableViewCell.cellHeight
+		default :
+			return defaultHeightForRow
+		}
 	}
 
 	func numberOfSections(in tableView: UITableView) -> Int {
-		sectionForTaskManager.getSectionsTitles().count
+		presenter.viewData.sectionsItems.count
 	}
 
 	func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-		return sectionForTaskManager.getSectionsTitles()[section]
+		return presenter.viewData.sectionsTitles[section]
 	}
 
 	func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-		switch sectionForTaskManager.getSectionsItems(section: indexPath.section)[indexPath.row] {
+		switch presenter.viewData.sectionsItems[indexPath.section][indexPath.row] {
 		case let task where task is RegularTask:
 			guard let cell = tableView.dequeueReusableCell(
 				withIdentifier: RegularTaskTableViewCell.reuseCellID
@@ -86,7 +92,7 @@ extension MainScreenViewController: UITableViewDataSource, UITableViewDelegate {
 						,modelOutput: {[weak self] value in
 							task.setCompleted(value)
 							DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
-								self?.tableView.reloadData()
+								self?.presenter.refresh()
 							}
 						}
 				)
@@ -104,7 +110,7 @@ extension MainScreenViewController: UITableViewDataSource, UITableViewDelegate {
 						,modelOutput: {[weak self] value in
 							task.setCompleted(value)
 							DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
-								self?.tableView.reloadData()
+								self?.presenter.refresh()
 							}
 						}
 				)

@@ -7,12 +7,15 @@
 
 import Foundation
 
+/// Протокол для модели ячейки отображающей RegularTask.
 protocol IRegularTaskCellModelInput {
+	/// Флаг выполнения задачи.
 	var completed: Bool { get }
+	/// Название задачи.
 	var title: String { get }
 }
 
-
+/// Модель для отображения информации о RegularTask в ячейке таблицы.
 struct RegularTaskCellModelInput: IRegularTaskCellModelInput {
 	var completed: Bool
 	var title: String
