@@ -11,15 +11,16 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
 	var window: UIWindow?
 
-
 	func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
 
 		guard let windowScene = (scene as? UIWindowScene) else { return }
 		let window = UIWindow(windowScene: windowScene)
 
-		let taskList = StubRepository().loadTasks()
+		let taskList = TaskRepositoryStub().loadTasks()
+		let taskManager = OrderedTaskManager(taskManager: TaskManager(tasks: taskList))
+		let sectionForTaskManagerAdapter = SectionForTaskManagerAdapter(taskManager: taskManager)
 		let viewController = MainScreenViewController(
-			taskManager: TaskManager(tasks: taskList)
+			sectionForTaskManager: sectionForTaskManagerAdapter
 		)
 		window.rootViewController = viewController
 		

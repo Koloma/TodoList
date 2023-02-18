@@ -18,25 +18,29 @@ protocol ITask {
 /// Базовый класс задач
 class Task: ITask {
 
+	/// Дата создания задачи
 	private(set) var createDate: Date
+	/// Статус выполнения задачи
 	private(set) var completed: Bool
+	/// Заголовок задачи
 	private(set) var title: String
 
 	/// Инициализатор базовой задачи
 	/// - Parameters:
 	///   - title: заголовок задачи
 	///   - date: дата начала задачи
-	init(title: String, date: Date? = nil) {
+	init(title: String, completed: Bool = false, date: Date? = nil) {
 		self.title = title
 		self.completed = false
 		self.createDate = date ?? Date()
 	}
 
+	/// Устанавливает статус задачи в состояние выполненной или нет,
+	/// зависит от значения передаваемого параметра
 	func setCompleted(_ state: Bool) {
 		self.completed = state
 	}
 }
-
 
 /// Обычные задач
 final class RegularTask: Task { }
@@ -47,7 +51,7 @@ final class RegularTask: Task { }
 final class ImportantTask: Task {
 
 	/// Приоритеты задач
-	enum TaskPriority {
+	enum TaskPriority: Int{
 		case low
 		case medium
 		case high
@@ -60,7 +64,10 @@ final class ImportantTask: Task {
 		case hight = 1
 	}
 
+	/// Приоритет задач
 	private(set) var taskPriority: TaskPriority
+
+	///Дата окончания задания (зависит от приоритета)
 	var deadLine: Date {
 		switch taskPriority {
 		case .low:
@@ -81,7 +88,6 @@ final class ImportantTask: Task {
 		}
 	}
 
-
 	/// Инициализатор важных задач
 	/// - Parameters:
 	///   - title: заголовок задачи
@@ -93,15 +99,17 @@ final class ImportantTask: Task {
 	}
 }
 
-/// Строковое описание для обычных задач
 extension RegularTask {
+
+	/// Строковое описание для обычных задач
 	var description: String {
 		return "[\(completed ? "X" : " ")] RegularTask \(title)"
 	}
 }
 
-/// Строковое описание для важных задач
 extension ImportantTask {
+
+	/// Строковое описание для важных задач
 	var description: String {
 		return "[\(completed ? "X" : " ")] ImportantTask \(title) Priority \(taskPriority)"
 	}
