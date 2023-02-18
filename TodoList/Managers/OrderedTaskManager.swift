@@ -7,7 +7,7 @@
 
 import Foundation
 
-
+/// Менеджер задач с сортировкой
 final class OrderedTaskManager: ITaskManager {
 	let taskManager: ITaskManager
 
