@@ -99,6 +99,7 @@ final class ImportantTask: Task {
 	}
 }
 
+// MARK: extension RegularTask
 extension RegularTask {
 
 	/// Строковое описание для обычных задач
@@ -107,6 +108,7 @@ extension RegularTask {
 	}
 }
 
+// MARK: extension ImportantTask
 extension ImportantTask {
 
 	/// Строковое описание для важных задач

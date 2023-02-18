@@ -7,7 +7,7 @@
 
 import Foundation
 
-/// Протокол для загрузки и сохранения задач
+/// Протокол для загрузки данных из хранилища
 protocol IRepository {
 	func loadTasks() -> [ITask]
 }
