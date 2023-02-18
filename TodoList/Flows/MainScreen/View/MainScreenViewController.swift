@@ -10,17 +10,9 @@ import UIKit
 class MainScreenViewController: UIViewController {
 
 	private let tableView: UITableView = UITableView()
-	private var sectionForTaskManager: ISectionForTaskManagerAdapter
 
-	// MARK: init
-	init(sectionForTaskManager: ISectionForTaskManagerAdapter) {
-		self.sectionForTaskManager = sectionForTaskManager
-		super.init(nibName: nil, bundle: nil)
-	}
+	var presenter: IMainScreenPresenter!
 
-	required init?(coder: NSCoder) {
-		fatalError("init(coder:) has not been implemented")
-	}
 	
 	// MARK: viewDidLoad
 	override func viewDidLoad() {
@@ -53,11 +45,19 @@ class MainScreenViewController: UIViewController {
 	}
 }
 
+// MARK: extension MainScreenViewController: IMainScreenView
+extension MainScreenViewController: IMainScreenView {
+	func render(viewData: ViewData) {
+		self.view = view
+		tableView.reloadData()
+	}
+}
+
 // MARK: extension MainScreenViewController
 extension MainScreenViewController: UITableViewDataSource, UITableViewDelegate {
 
 	func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-		return sectionForTaskManager.getSectionsItems(section: section).count
+		return presenter.viewData.sectionsItems[section].count
 	}
 
 	func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
@@ -65,15 +65,15 @@ extension MainScreenViewController: UITableViewDataSource, UITableViewDelegate {
 	}
 
 	func numberOfSections(in tableView: UITableView) -> Int {
-		sectionForTaskManager.getSectionsTitles().count
+		presenter.viewData.sectionsItems.count
 	}
 
 	func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-		return sectionForTaskManager.getSectionsTitles()[section]
+		return presenter.viewData.sectionsTitles[section]
 	}
 
 	func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-		switch sectionForTaskManager.getSectionsItems(section: indexPath.section)[indexPath.row] {
+		switch presenter.viewData.sectionsItems[indexPath.section][indexPath.row] {
 		case let task where task is RegularTask:
 			guard let cell = tableView.dequeueReusableCell(
 				withIdentifier: RegularTaskTableViewCell.reuseCellID
