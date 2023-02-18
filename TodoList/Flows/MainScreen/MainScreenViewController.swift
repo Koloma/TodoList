@@ -10,11 +10,11 @@ import UIKit
 class MainScreenViewController: UIViewController {
 
 	private let tableView: UITableView = UITableView()
-	private var taskManager: IMainViewTaskManagerAdapter
+	private var sectionForTaskManager: ISectionForTaskManagerAdapter
 
 	// MARK: init
-	init(taskManager: IMainViewTaskManagerAdapter) {
-		self.taskManager = taskManager
+	init(sectionForTaskManager: ISectionForTaskManagerAdapter) {
+		self.sectionForTaskManager = sectionForTaskManager
 		super.init(nibName: nil, bundle: nil)
 	}
 
@@ -57,7 +57,7 @@ class MainScreenViewController: UIViewController {
 extension MainScreenViewController: UITableViewDataSource, UITableViewDelegate {
 
 	func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-		return taskManager.getSectionsItems(section: section).count
+		return sectionForTaskManager.getSectionsItems(section: section).count
 	}
 
 	func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
@@ -65,15 +65,15 @@ extension MainScreenViewController: UITableViewDataSource, UITableViewDelegate {
 	}
 
 	func numberOfSections(in tableView: UITableView) -> Int {
-		taskManager.getSectionsTitles().count
+		sectionForTaskManager.getSectionsTitles().count
 	}
 
 	func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-		return taskManager.getSectionsTitles()[section]
+		return sectionForTaskManager.getSectionsTitles()[section]
 	}
 
 	func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-		switch taskManager.getSectionsItems(section: indexPath.section)[indexPath.row] {
+		switch sectionForTaskManager.getSectionsItems(section: indexPath.section)[indexPath.row] {
 		case let task where task is RegularTask:
 			guard let cell = tableView.dequeueReusableCell(
 				withIdentifier: RegularTaskTableViewCell.reuseCellID

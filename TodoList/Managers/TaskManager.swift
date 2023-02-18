@@ -7,14 +7,6 @@
 
 import Foundation
 
-///Протокол менеджеров управления задачами
-protocol ITaskManager {
-	func allTasks() -> [ITask]
-	func completedTasks() -> [ITask]
-	func notCompletedTasks() -> [ITask]
-	func addTask(task: ITask)
-	func delTask (task: ITask)
-}
 
 /// Менеджер по управлению списком задач
 final class TaskManager: ITaskManager {

@@ -8,8 +8,29 @@
 import Foundation
 
 
-protocol IMainViewTaskManagerAdapter: ITaskManager {
+protocol ISectionForTaskManagerAdapter {
 
 	func getSectionsTitles() -> [String]
 	func getSectionsItems(section sectionIndex: Int) -> [ITask]
+}
+
+final class SectionForTaskManagerAdapter: ISectionForTaskManagerAdapter {
+	private let taskManager: ITaskManager
+
+	init(taskManager: ITaskManager) {
+		self.taskManager = taskManager
+	}
+
+	func getSectionsTitles() -> [String] {
+		return ["Not completed tasks", "Completed tasks"]
+	}
+
+	func getSectionsItems(section sectionIndex: Int) -> [ITask] {
+		switch sectionIndex {
+		case 0:
+			return taskManager.notCompletedTasks()
+		default:
+			return taskManager.completedTasks()
+		}
+	}
 }

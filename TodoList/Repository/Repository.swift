@@ -10,11 +10,10 @@ import Foundation
 /// Протокол для загрузки и сохранения задач
 protocol IRepository {
 	func loadTasks() -> [ITask]
-	func saveTasks(_ tasks: [ITask])
 }
 
 /// Stub repository
-final class StubRepository: IRepository {
+final class TaskRepositoryStub: IRepository {
 
 	/// Загружаем заранее подготовленный список задач
 	/// - Returns: [ITask] список задач
@@ -32,10 +31,5 @@ final class StubRepository: IRepository {
 				  ,ImportantTask(title: "ImportantTask 2", taskPriority: .high)
 				  ,ImportantTask(title: "ImportantTask 2", taskPriority: .medium)
 		]
-	}
-
-	/// Заглушка  для сохранения списка задач
-	func saveTasks(_ tasks: [ITask]) {
-		return
 	}
 }
