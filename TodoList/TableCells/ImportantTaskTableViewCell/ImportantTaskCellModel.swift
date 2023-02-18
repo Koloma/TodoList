@@ -7,20 +7,20 @@
 
 import UIKit
 
-/// Протокол для модели ячейки отображающей ImportantTask
+/// Протокол для модели ячейки отображающей ImportantTask.
 protocol IImportantTaskCellModelInput {
 
-	/// Флаг выполнения задачи
+	/// Флаг выполнения задачи.
 	var completed: Bool { get }
-	/// Название задачи
+	/// Название задачи.
 	var title: String { get }
-	/// Время окончания задачи
+	/// Время окончания задачи.
 	var deadLine: String { get }
-	/// Цвет подсветки невыполненой в срок задачи
+	/// Цвет подсветки невыполненой в срок задачи.
 	var colorFailedDeadLine: UIColor { get }
 }
 
-/// Модель для отображения информации о ImportantTask в ячейке таблицы
+/// Модель для отображения информации о ImportantTask в ячейке таблицы.
 struct ImportantTaskCellModelInput: IImportantTaskCellModelInput {
 	var completed: Bool
 	var title: String

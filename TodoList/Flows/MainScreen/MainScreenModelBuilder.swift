@@ -8,17 +8,17 @@
 import UIKit
 
 
-/// Протокол для сборки модуля MVP
+/// Протокол для сборки модуля MVP.
 protocol UnitBuilder {
 
-	/// Строитель модуля MVP 
+	/// Строитель модуля MVP .
 	/// - Returns: UIViewController
 	static func createVMPUnit() -> UIViewController
 }
 
-/// Строитель модуля MVP для MainScreen
+/// Строитель модуля MVP для MainScreen.
 class MainScreenUnitBuilder: UnitBuilder {
-	/// Функция создающая модуль MVP со всеми зависимостями для MainScreen
+	/// Функция создающая модуль MVP со всеми зависимостями для MainScreen.
 	/// - Returns: возвращает полностью настроенный UIViewController
 	static func createVMPUnit() -> UIViewController {
 		let taskList = TaskRepositoryStub().loadTasks()
