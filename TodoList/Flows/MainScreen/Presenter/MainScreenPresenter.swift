@@ -8,20 +8,24 @@
 import Foundation
 
 protocol IMainScreenPresenter: AnyObject {
-	var view: IMainScreenView { get }
-	var viewData: ViewData { get }
+	var view: IMainScreenView? { get }
+	var viewData: ViewData { get set }
 	init(view: IMainScreenView, viewData: ViewData)
+	func refresh()
 }
 
 final class MainScreenPresenter: IMainScreenPresenter {
-	let view: IMainScreenView
-	let viewData: ViewData
+	weak var view: IMainScreenView?
+	var viewData: ViewData
 
 	init(view: IMainScreenView, viewData: ViewData) {
 		self.view = view
 		self.viewData = viewData
 	}
-	
+
+	func refresh() {
+		view?.render(viewData: viewData)
+	}
 }
 
 

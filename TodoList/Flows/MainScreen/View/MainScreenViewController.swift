@@ -35,7 +35,6 @@ class MainScreenViewController: UIViewController {
 
 	// MARK: initView
 	private func initView() {
-
 		view.addSubview(tableView)
 		tableView.translatesAutoresizingMaskIntoConstraints = false
 		tableView.topAnchor.constraint(equalTo: view.topAnchor).isActive = true
@@ -48,7 +47,6 @@ class MainScreenViewController: UIViewController {
 // MARK: extension MainScreenViewController: IMainScreenView
 extension MainScreenViewController: IMainScreenView {
 	func render(viewData: ViewData) {
-		self.view = view
 		tableView.reloadData()
 	}
 }
@@ -61,7 +59,15 @@ extension MainScreenViewController: UITableViewDataSource, UITableViewDelegate {
 	}
 
 	func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-			return 80
+		let defaultHeightForRow = 80.0
+		switch presenter.viewData.sectionsItems[indexPath.section][indexPath.row] {
+		case is RegularTask:
+			return RegularTaskTableViewCell.cellHeight
+		case is ImportantTask:
+			return ImportantTaskTableViewCell.cellHeight
+		default :
+			return defaultHeightForRow
+		}
 	}
 
 	func numberOfSections(in tableView: UITableView) -> Int {
@@ -86,7 +92,7 @@ extension MainScreenViewController: UITableViewDataSource, UITableViewDelegate {
 						,modelOutput: {[weak self] value in
 							task.setCompleted(value)
 							DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
-								self?.tableView.reloadData()
+								self?.presenter.refresh()
 							}
 						}
 				)
@@ -104,7 +110,7 @@ extension MainScreenViewController: UITableViewDataSource, UITableViewDelegate {
 						,modelOutput: {[weak self] value in
 							task.setCompleted(value)
 							DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
-								self?.tableView.reloadData()
+								self?.presenter.refresh()
 							}
 						}
 				)
