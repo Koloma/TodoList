@@ -24,14 +24,22 @@ protocol ISectionForTaskManagerAdapter {
 final class SectionForTaskManagerAdapter: ISectionForTaskManagerAdapter {
 	private let taskManager: ITaskManager
 
+
+	/// Инициализатор SectionForTaskManagerAdapter
+	/// - Parameter taskManager: менеджер задач
 	init(taskManager: ITaskManager) {
 		self.taskManager = taskManager
 	}
 
+	/// Возвращает  список заголовков для секций таблицы
 	func getSectionsTitles() -> [String] {
 		return ["Not completed tasks", "Completed tasks"]
 	}
 
+
+	/// Возвращает список элементов для выбранной секции
+	/// - Parameter sectionIndex: индекс секции
+	/// - Returns: список задач
 	func getSectionsItems(section sectionIndex: Int) -> [ITask] {
 		switch sectionIndex {
 		case 0:

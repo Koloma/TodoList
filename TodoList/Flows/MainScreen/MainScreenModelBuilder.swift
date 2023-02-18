@@ -7,12 +7,20 @@
 
 import UIKit
 
-protocol Builder {
-	static func createModel() -> UIViewController
+
+/// Протокол для сборки модуля MVP
+protocol UnitBuilder {
+
+	/// Строитель модуля MVP 
+	/// - Returns: UIViewController
+	static func createVMPUnit() -> UIViewController
 }
 
-class MainScreenModelBuilder: Builder {
-	static func createModel() -> UIViewController {
+/// Строитель модуля MVP для MainScreen
+class MainScreenUnitBuilder: UnitBuilder {
+	/// Функция создающая модуль MVP со всеми зависимостями для MainScreen
+	/// - Returns: возвращает полностью настроенный UIViewController
+	static func createVMPUnit() -> UIViewController {
 		let taskList = TaskRepositoryStub().loadTasks()
 		let taskManager = OrderedTaskManager(taskManager: TaskManager(tasks: taskList))
 		let sectionForTaskManagerAdapter = SectionForTaskManagerAdapter(taskManager: taskManager)

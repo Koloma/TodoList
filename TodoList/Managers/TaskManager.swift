@@ -13,6 +13,9 @@ final class TaskManager: ITaskManager {
 
 	private var tasks:[ITask] = []
 
+
+	/// Инициализатор TaskManager
+	/// - Parameter список задач
 	init(tasks: [ITask]) {
 		self.tasks = tasks
 	}
