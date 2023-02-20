@@ -25,7 +25,7 @@ class MainScreenUnitBuilder: UnitBuilder {
 		let taskManager = OrderedTaskManager(taskManager: TaskManager(tasks: taskList))
 		let sectionForTaskManagerAdapter = SectionForTaskManagerAdapter(taskManager: taskManager)
 
-		var sectionsItems = [[ITask]]()
+		var sectionsItems = [[Task]]()
 		for index in 0...sectionForTaskManagerAdapter.getSectionsTitles().count - 1 {
 			let sectionData = sectionForTaskManagerAdapter.getSectionsItems(section: index)
 			sectionsItems.append(sectionData)

@@ -7,16 +7,9 @@
 
 import Foundation
 
-/// Протокол задач.
-protocol ITask {
-	var createDate: Date { get }
-	var completed: Bool { get }
-	var title: String { get }
-	func setCompleted(_ state: Bool)
-}
 
 /// Базовый класс задач.
-class Task: ITask {
+class Task {
 
 	/// Дата создания задачи.
 	private(set) var createDate: Date

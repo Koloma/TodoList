@@ -17,7 +17,7 @@ protocol ISectionForTaskManagerAdapter {
 	/// Получаем список элементов секций таблицы.
 	/// - Parameter sectionIndex
 	/// - Returns: [ITask]
-	func getSectionsItems(section sectionIndex: Int) -> [ITask]
+	func getSectionsItems(section sectionIndex: Int) -> [Task]
 }
 
 /// Адаптер для протокола ITaskManager.
@@ -40,7 +40,7 @@ final class SectionForTaskManagerAdapter: ISectionForTaskManagerAdapter {
 	/// Возвращает список элементов для выбранной секции.
 	/// - Parameter sectionIndex: индекс секции
 	/// - Returns: список задач
-	func getSectionsItems(section sectionIndex: Int) -> [ITask] {
+	func getSectionsItems(section sectionIndex: Int) -> [Task] {
 		switch sectionIndex {
 		case 0:
 			return taskManager.notCompletedTasks()

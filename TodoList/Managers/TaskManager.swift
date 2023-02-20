@@ -11,42 +11,42 @@ import Foundation
 /// Менеджер по управлению списком задач.
 final class TaskManager: ITaskManager {
 
-	private var tasks:[ITask] = []
+	private var tasks:[Task] = []
 
 
 	/// Инициализатор TaskManager.
 	/// - Parameter список задач
-	init(tasks: [ITask]) {
+	init(tasks: [Task]) {
 		self.tasks = tasks
 	}
 
 	/// Возвращает список всех задач.
-	/// - Returns: [ITask]
-	func allTasks() -> [ITask] {
+	/// - Returns: [Task]
+	func allTasks() -> [Task] {
 		return tasks
 	}
 
 	/// Возвращает список завершенных задач.
-	/// - Returns: [ITask]
-	func completedTasks() -> [ITask] {
+	/// - Returns: [Task]
+	func completedTasks() -> [Task] {
 		return tasks.filter { $0.completed }
 	}
 
 	/// Возвращает список не завершенных задач.
-	/// - Returns: [ITask]
-	func notCompletedTasks() -> [ITask] {
+	/// - Returns: [Task]
+	func notCompletedTasks() -> [Task] {
 		return tasks.filter { !$0.completed }
 	}
 
 	/// Добавляет новую задачу к списку задач.
-	/// - Parameter task: ITask
-	func addTask(task: ITask) {
+	/// - Parameter task: Task
+	func addTask(task: Task) {
 		tasks.append(task)
 	}
 
 	/// Удаляет задачу из списка задач.
-	/// - Parameter task: ITask
-	func delTask (task: ITask) {
+	/// - Parameter task: Task
+	func delTask (task: Task) {
 		tasks.removeAll { $0.title == task.title }
 	}
 }

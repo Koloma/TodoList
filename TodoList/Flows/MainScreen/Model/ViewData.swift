@@ -13,5 +13,5 @@ struct ViewData {
 	let sectionsTitles: [String]
 
 	/// Массив задач разбитый по секциям.
-	let sectionsItems: [[ITask]]
+	let sectionsItems: [[Task]]
 }

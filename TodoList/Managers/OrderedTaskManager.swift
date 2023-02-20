@@ -20,31 +20,31 @@ final class OrderedTaskManager: ITaskManager {
 
 
 	/// Возвращает список всех отсортированных задач.
-	func allTasks() -> [ITask] {
+	func allTasks() -> [Task] {
 		return sorted(tasks: taskManager.allTasks())
 	}
 
 	/// Возвращает список всех отсортированных  выполненных задач.
-	func completedTasks() -> [ITask] {
+	func completedTasks() -> [Task] {
 		return sorted(tasks: taskManager.completedTasks())
 	}
 
 	/// Возвращает список всех отсортированных невыполненных задач.
-	func notCompletedTasks() -> [ITask] {
+	func notCompletedTasks() -> [Task] {
 		return sorted(tasks: taskManager.notCompletedTasks())
 	}
 
 	/// Добавить задачу в список задач.
-	func addTask(task: ITask) {
+	func addTask(task: Task) {
 		taskManager.addTask(task: task)
 	}
 
 	/// Удалить задачу и списка задач.
-	func delTask(task: ITask) {
+	func delTask(task: Task) {
 		taskManager.delTask(task: task)
 	}
 
-	private func sorted(tasks: [ITask]) -> [ITask] {
+	private func sorted(tasks: [Task]) -> [Task] {
 		tasks.sorted {
 			if let task0: ImportantTask = $0 as? ImportantTask
 				, let task1: ImportantTask = $1 as? ImportantTask {
