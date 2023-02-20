@@ -1,0 +1,115 @@
+Добрый вечер, Александр!
+
+Главное замечание -- файл .gitignore
+
+### SwiftPackageManager ###
+Packages
+xcuserdata
+*.xcodeproj
+Из-за него нету файла проекта, так что открыть проект и собрать, я не могу.
+
+/// Протокол для MainScreen Presenter.
+protocol IMainScreenPresenter: AnyObject {
+    /// View
+    var view: IMainScreenView? { get }
+    /// Model
+    var viewData: ViewData { get set }
+    /// Инициализатор Presenter
+    init(view: IMainScreenView, viewData: ViewData)
+    /// Функция для обновления отображаемых данных во View.
+    func refresh()
+}
+var viewData: ViewData { get set } -- говорит о том, что View может забрать данные у Presenter когда ей нужно. Но ей нельзя так делать. Определять нужны ей данные или нет, должна бизнес логика приложения, а она у нас в Presenter.
+
+Главная тема MVP в том, что Presenter отвечает за работу приложения. Вся бизнес логика именно в нем. Это сделано для того, чтобы отвязать бизнес логику от UI. Поэтому View ничего не знает про Presenter, а тот в свою очередь не должен знать про View (про UI).
+
+var view: IMainScreenView? { get } -- это должно остаться деталью реализации Presenter, если мы это открываем через протокол, то View имеет саму себя -- некрасиво.
+
+/// MainScreen Presenter.
+final class MainScreenPresenter: IMainScreenPresenter {
+    /// Ссылка на MainScreen View.
+    weak var view: IMainScreenView?
+    /// Данные для отображения во View.
+    var viewData: ViewData
+
+    /// Инициализатор Presenter.
+    init(view: IMainScreenView, viewData: ViewData) {
+        self.view = view
+        self.viewData = viewData
+    }
+
+    /// Функция для обновления отображаемых данных во View.
+    func refresh() {
+        view?.render(viewData: viewData)
+    }
+}
+А вот это не Presenter! Вся логика приложения должна быть внутри Presenter, а ее тут нет! Получение данных, формирование данных, после того, как данные сформированы, он должен вызывать view?.render(viewData: viewData). Не View, а Presenter.
+
+Он мозг в MVP. А тут ничего нет, все тот же MVC.
+
+/// Структура для передачи данных во View.
+struct ViewData {
+    /// Список заголовков для секций таблицы.
+    let sectionsTitles: [String]
+
+    /// Массив задач разбитый по секциям.
+    let sectionsItems: [[ITask]]
+}
+
+/// Протокол задач.
+protocol ITask {
+    var createDate: Date { get }
+    var completed: Bool { get }
+    var title: String { get }
+    func setCompleted(_ state: Bool)
+}
+Не понял для чего надо вводить протокол ITask и переписывать по новой реализацию задач. ViewData должна содержать подготовленные данные для View. Как пример, она может быть такой:
+
+struct ViewData {
+    struct RegularTask {
+        let name: String
+        let isDone: Bool
+    }
+
+    struct ImportantTask {
+        let name: String
+        let isDone: Bool
+        let isOverdue: Bool
+        let deadLine: String
+        let priority: String
+    }
+
+    enum Task {
+        case regularTask(RegularTask)
+        case importantTask(ImportantTask)
+    }
+
+    enum Section: CaseIterable {
+        case completed([Task])
+        case uncompleted([Task])
+
+        var title: String {
+            switch self {
+            case .completed:
+                return "Completed"
+            case .uncompleted:
+                return "Uncompleted"
+            }
+        }
+    }
+
+    let tasksBySections: [Section]
+}
+Тут описан весь UI. Секции и списки задач для них. Теперь Presenter должен это создать на основе данных от TaskList и отдать его во View:
+
+func render(viewData: ViewData) {
+    self.tasksBySections = viewData.tasksBySections
+    tableView.reload()
+}
+Таким образом мы достигаем разделения логики от UI, сперва может показаться странным, но на больших проектах с большой командой это отлично работает, так как разделяется ответственность. Более того, мы можем проверить UI без настоящего Presenter.
+
+Зачем я ввел enum Task? чтобы исключить опционалы и гарантировано передавать только валидные данные, подготовленные Presenter для отображения.
+
+Но теперь при тапе на ячейку мы не можем внутри таблицы изменять наши модели бизнес логики, так как отделены от нее и она не протекает в UI. Мы должны дернуть метод Presenter, который сам поменяет нужные данные, снова сгенерит ViewData и отдаст ее в UI, тем самым обновив таблицу.
+
+Надеюсь, теперь стало понятнее чем MVP отличается от прочего.
