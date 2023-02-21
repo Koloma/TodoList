@@ -13,12 +13,6 @@
 		201F82962998A84700B1A7AD /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 201F82952998A84700B1A7AD /* Assets.xcassets */; };
 		201F82A52998BD0A00B1A7AD /* Task.swift in Sources */ = {isa = PBXBuildFile; fileRef = 201F82A42998BD0A00B1A7AD /* Task.swift */; };
 		201F82A82998C37E00B1A7AD /* TaskManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 201F82A72998C37E00B1A7AD /* TaskManager.swift */; };
-		20CB72242998D3CB00DADA99 /* RegularTaskTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20CB72222998D3CB00DADA99 /* RegularTaskTableViewCell.swift */; };
-		20CB72252998D3CB00DADA99 /* RegularTaskTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 20CB72232998D3CB00DADA99 /* RegularTaskTableViewCell.xib */; };
-		20CB722B2998D41500DADA99 /* ImportantTaskTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20CB72292998D41500DADA99 /* ImportantTaskTableViewCell.swift */; };
-		20CB722C2998D41500DADA99 /* ImportantTaskTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 20CB722A2998D41500DADA99 /* ImportantTaskTableViewCell.xib */; };
-		20CB722E2998D9CE00DADA99 /* RegularTaskCellModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20CB722D2998D9CE00DADA99 /* RegularTaskCellModel.swift */; };
-		20CB72302998DF2100DADA99 /* ImportantTaskCellModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20CB722F2998DF2100DADA99 /* ImportantTaskCellModel.swift */; };
 		20FDB78A299D1ED000B90A56 /* Repository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20FDB789299D1ED000B90A56 /* Repository.swift */; };
 		20FDB791299D34F600B90A56 /* SectionForTaskManagerAdapter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20FDB790299D34F600B90A56 /* SectionForTaskManagerAdapter.swift */; };
 		20FDB79529A097B100B90A56 /* ITaskManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20FDB79429A097B100B90A56 /* ITaskManager.swift */; };
@@ -39,12 +33,6 @@
 		201F829A2998A84700B1A7AD /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		201F82A42998BD0A00B1A7AD /* Task.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Task.swift; sourceTree = "<group>"; };
 		201F82A72998C37E00B1A7AD /* TaskManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskManager.swift; sourceTree = "<group>"; };
-		20CB72222998D3CB00DADA99 /* RegularTaskTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegularTaskTableViewCell.swift; sourceTree = "<group>"; };
-		20CB72232998D3CB00DADA99 /* RegularTaskTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = RegularTaskTableViewCell.xib; sourceTree = "<group>"; };
-		20CB72292998D41500DADA99 /* ImportantTaskTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImportantTaskTableViewCell.swift; sourceTree = "<group>"; };
-		20CB722A2998D41500DADA99 /* ImportantTaskTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ImportantTaskTableViewCell.xib; sourceTree = "<group>"; };
-		20CB722D2998D9CE00DADA99 /* RegularTaskCellModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegularTaskCellModel.swift; sourceTree = "<group>"; };
-		20CB722F2998DF2100DADA99 /* ImportantTaskCellModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImportantTaskCellModel.swift; sourceTree = "<group>"; };
 		20FDB789299D1ED000B90A56 /* Repository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Repository.swift; sourceTree = "<group>"; };
 		20FDB790299D34F600B90A56 /* SectionForTaskManagerAdapter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SectionForTaskManagerAdapter.swift; sourceTree = "<group>"; };
 		20FDB79429A097B100B90A56 /* ITaskManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ITaskManager.swift; sourceTree = "<group>"; };
@@ -89,7 +77,6 @@
 			isa = PBXGroup;
 			children = (
 				20FDB78F299D304B00B90A56 /* Repository */,
-				20CB72202998D36400DADA99 /* TableCells */,
 				201F82A62998C36600B1A7AD /* Managers */,
 				201F82A12998B85F00B1A7AD /* Scenes */,
 				201F82A02998B85600B1A7AD /* System */,
@@ -137,35 +124,6 @@
 				20FDB79629A0995D00B90A56 /* OrderedTaskManager.swift */,
 			);
 			path = Managers;
-			sourceTree = "<group>";
-		};
-		20CB72202998D36400DADA99 /* TableCells */ = {
-			isa = PBXGroup;
-			children = (
-				20CB72262998D3CF00DADA99 /* ImportantTaskTableViewCell */,
-				20CB72212998D37300DADA99 /* RegularTaskTableViewCell */,
-			);
-			path = TableCells;
-			sourceTree = "<group>";
-		};
-		20CB72212998D37300DADA99 /* RegularTaskTableViewCell */ = {
-			isa = PBXGroup;
-			children = (
-				20CB72222998D3CB00DADA99 /* RegularTaskTableViewCell.swift */,
-				20CB72232998D3CB00DADA99 /* RegularTaskTableViewCell.xib */,
-				20CB722D2998D9CE00DADA99 /* RegularTaskCellModel.swift */,
-			);
-			path = RegularTaskTableViewCell;
-			sourceTree = "<group>";
-		};
-		20CB72262998D3CF00DADA99 /* ImportantTaskTableViewCell */ = {
-			isa = PBXGroup;
-			children = (
-				20CB72292998D41500DADA99 /* ImportantTaskTableViewCell.swift */,
-				20CB722A2998D41500DADA99 /* ImportantTaskTableViewCell.xib */,
-				20CB722F2998DF2100DADA99 /* ImportantTaskCellModel.swift */,
-			);
-			path = ImportantTaskTableViewCell;
 			sourceTree = "<group>";
 		};
 		20FDB78F299D304B00B90A56 /* Repository */ = {
@@ -267,9 +225,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				201F82962998A84700B1A7AD /* Assets.xcassets in Resources */,
-				20CB72252998D3CB00DADA99 /* RegularTaskTableViewCell.xib in Resources */,
 				20FDB7A429A12A9D00B90A56 /* README.md in Resources */,
-				20CB722C2998D41500DADA99 /* ImportantTaskTableViewCell.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -283,20 +239,16 @@
 				201F82A52998BD0A00B1A7AD /* Task.swift in Sources */,
 				201F82912998A84600B1A7AD /* MainScreenViewController.swift in Sources */,
 				20FDB79C29A0BB5F00B90A56 /* ViewData.swift in Sources */,
-				20CB72242998D3CB00DADA99 /* RegularTaskTableViewCell.swift in Sources */,
 				20FDB7A029A0D93800B90A56 /* MainScreenModelBuilder.swift in Sources */,
 				20FDB791299D34F600B90A56 /* SectionForTaskManagerAdapter.swift in Sources */,
 				20FDB79529A097B100B90A56 /* ITaskManager.swift in Sources */,
-				20CB72302998DF2100DADA99 /* ImportantTaskCellModel.swift in Sources */,
 				20FDB7A229A0E13C00B90A56 /* IMainScreenView.swift in Sources */,
 				20FDB79729A0995D00B90A56 /* OrderedTaskManager.swift in Sources */,
 				20FDB78A299D1ED000B90A56 /* Repository.swift in Sources */,
 				201F82A82998C37E00B1A7AD /* TaskManager.swift in Sources */,
 				20FDB79929A0B12500B90A56 /* MainScreenPresenter.swift in Sources */,
 				201F828D2998A84600B1A7AD /* AppDelegate.swift in Sources */,
-				20CB722B2998D41500DADA99 /* ImportantTaskTableViewCell.swift in Sources */,
 				201F828F2998A84600B1A7AD /* SceneDelegate.swift in Sources */,
-				20CB722E2998D9CE00DADA99 /* RegularTaskCellModel.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
