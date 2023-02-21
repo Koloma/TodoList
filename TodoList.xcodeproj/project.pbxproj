@@ -91,7 +91,7 @@
 				20FDB78F299D304B00B90A56 /* Repository */,
 				20CB72202998D36400DADA99 /* TableCells */,
 				201F82A62998C36600B1A7AD /* Managers */,
-				201F82A12998B85F00B1A7AD /* Flows */,
+				201F82A12998B85F00B1A7AD /* Scenes */,
 				201F82A02998B85600B1A7AD /* System */,
 				201F82A42998BD0A00B1A7AD /* Task.swift */,
 			);
@@ -109,12 +109,12 @@
 			path = System;
 			sourceTree = "<group>";
 		};
-		201F82A12998B85F00B1A7AD /* Flows */ = {
+		201F82A12998B85F00B1A7AD /* Scenes */ = {
 			isa = PBXGroup;
 			children = (
 				201F82A22998B88100B1A7AD /* MainScreen */,
 			);
-			path = Flows;
+			path = Scenes;
 			sourceTree = "<group>";
 		};
 		201F82A22998B88100B1A7AD /* MainScreen */ = {
