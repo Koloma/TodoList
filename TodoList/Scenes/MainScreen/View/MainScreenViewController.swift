@@ -11,30 +11,29 @@ class MainScreenViewController: UIViewController {
 
 	private let tableView: UITableView = UITableView()
 
-	var presenter: IMainScreenPresenter!
+	var viewData: MainModel.ViewData = MainModel.ViewData(tasksBySections: [])
+	var presenter: IMainPresenter?
 
 	
 	// MARK: viewDidLoad
 	override func viewDidLoad() {
 		super.viewDidLoad()
+
 		initView()
 		initTableView()
+
+		presenter?.viewIsReady()
 	}
 
 	// MARK: initViewTableView
 	private func initTableView() {
 		tableView.dataSource = self
-		tableView.register(
-			RegularTaskTableViewCell.nib
-			, forCellReuseIdentifier: RegularTaskTableViewCell.reuseCellID)
-		tableView.register(
-			ImportantTaskTableViewCell.nib
-			, forCellReuseIdentifier: ImportantTaskTableViewCell.reuseCellID)
-
+		self.tableView.register(UITableViewCell.self, forCellReuseIdentifier: "cell")
 	}
 
 	// MARK: initView
 	private func initView() {
+		title = "TodoList"
 		view.addSubview(tableView)
 		tableView.translatesAutoresizingMaskIntoConstraints = false
 		tableView.topAnchor.constraint(equalTo: view.topAnchor).isActive = true
@@ -44,82 +43,58 @@ class MainScreenViewController: UIViewController {
 	}
 }
 
-// MARK: extension MainScreenViewController: IMainScreenView
-extension MainScreenViewController: IMainScreenView {
-	func render(viewData: ViewData) {
+// MARK: extension MainScreenViewController: IMainViewController
+extension MainScreenViewController: IMainViewController {
+	func render(viewData: MainModel.ViewData) {
+		self.viewData = viewData
 		tableView.reloadData()
 	}
 }
+
 
 // MARK: extension MainScreenViewController
 extension MainScreenViewController: UITableViewDataSource, UITableViewDelegate {
 
 	func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-		return presenter.viewData.sectionsItems[section].count
-	}
-
-	func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-		let defaultHeightForRow = 80.0
-		switch presenter.viewData.sectionsItems[indexPath.section][indexPath.row] {
-		case is RegularTask:
-			return RegularTaskTableViewCell.cellHeight
-		case is ImportantTask:
-			return ImportantTaskTableViewCell.cellHeight
-		default :
-			return defaultHeightForRow
-		}
+		let section = viewData.tasksBySections[section]
+		return section.tasks.count
 	}
 
 	func numberOfSections(in tableView: UITableView) -> Int {
-		presenter.viewData.sectionsItems.count
+		viewData.tasksBySections.count
 	}
 
 	func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-		return presenter.viewData.sectionsTitles[section]
+		viewData.tasksBySections[section].title
 	}
 
 	func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-		switch presenter.viewData.sectionsItems[indexPath.section][indexPath.row] {
-		case let task where task is RegularTask:
-			guard let cell = tableView.dequeueReusableCell(
-				withIdentifier: RegularTaskTableViewCell.reuseCellID
-				, for: indexPath
-			) as? RegularTaskTableViewCell
-			else { return UITableViewCell()}
-				cell.config(
-						model: RegularTaskCellModelInput(
-						task: task as! RegularTask)
-						,modelOutput: {[weak self] value in
-							task.setCompleted(value)
-							DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
-								self?.presenter.refresh()
-							}
-						}
-				)
-				return cell
+		let tasks = viewData.tasksBySections[indexPath.section].tasks
+		let taskData = tasks[indexPath.row]
+		let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath)
+		var contentConfiguration = cell.defaultContentConfiguration()
 
-		case let task where task is ImportantTask:
-			guard let cell = tableView.dequeueReusableCell(
-				withIdentifier: ImportantTaskTableViewCell.reuseCellID
-				, for: indexPath
-			) as? ImportantTaskTableViewCell
-			else { return UITableViewCell()}
-				cell.config(
-						model: ImportantTaskCellModelInput(
-						task: task as! ImportantTask)
-						,modelOutput: {[weak self] value in
-							task.setCompleted(value)
-							DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
-								self?.presenter.refresh()
-							}
-						}
-				)
-				return cell
-		default:
-			return UITableViewCell()
+		switch taskData {
+		case .importantTask(let task):
+			let redText = [NSAttributedString.Key.foregroundColor:  UIColor.red]
+			let taskText = NSMutableAttributedString(string: "\(task.priority) ", attributes: redText )
+			taskText.append(NSAttributedString(string: task.name))
+
+			contentConfiguration.attributedText = taskText
+			contentConfiguration.secondaryText = task.deadLine
+			contentConfiguration.secondaryTextProperties.color = task.isOverdue ? .red : .black
+			cell.accessoryType = task.isDone ? .checkmark : .none
+		case .regularTask(let task):
+			contentConfiguration.text = task.name
+			cell.accessoryType = task.isDone ? .checkmark : .none
 		}
 
-	}
+		cell.tintColor = .red
+		contentConfiguration.secondaryTextProperties.font = UIFont.systemFont(ofSize: 16)
+		contentConfiguration.textProperties.font = UIFont.boldSystemFont(ofSize: 19)
+		cell.contentConfiguration = contentConfiguration
 
+		return cell
+	}
 }
 

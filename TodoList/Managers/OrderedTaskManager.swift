@@ -11,7 +11,6 @@ import Foundation
 final class OrderedTaskManager: ITaskManager {
 	private let taskManager: ITaskManager
 
-
 	/// Инициализатор OrderedTaskManager.
 	/// - Parameter taskManager
 	init(taskManager: ITaskManager) {
@@ -30,14 +29,20 @@ final class OrderedTaskManager: ITaskManager {
 	}
 
 	/// Возвращает список всех отсортированных невыполненных задач.
-	func notCompletedTasks() -> [Task] {
-		return sorted(tasks: taskManager.notCompletedTasks())
+	func uncompletedTasks() -> [Task] {
+		return sorted(tasks: taskManager.uncompletedTasks())
 	}
 
 	/// Добавить задачу в список задач.
 	func addTask(task: Task) {
 		taskManager.addTask(task: task)
 	}
+
+	/// Добавить список задач.
+	func addTasks(tasks: [Task]) {
+		taskManager.addTasks(tasks: tasks)
+	}
+
 
 	/// Удалить задачу и списка задач.
 	func delTask(task: Task) {

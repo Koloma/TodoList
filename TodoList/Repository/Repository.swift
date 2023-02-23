@@ -8,16 +8,16 @@
 import Foundation
 
 /// Протокол для загрузки данных из хранилища.
-protocol IRepository {
-	func loadTasks() -> [Task]
+protocol ITaskRepository {
+	func getTasks() -> [Task]
 }
 
 /// Stub repository.
-final class TaskRepositoryStub: IRepository {
+final class TaskRepositoryStub: ITaskRepository {
 
 	/// Загружаем заранее подготовленный список задач.
 	/// - Returns: [ITask] список задач
-	func loadTasks() -> [Task] {
+	func getTasks() -> [Task] {
 		let task = RegularTask(title: "RegTask 2")
 		task.setCompleted(true)
 		return  [ RegularTask(title: "RegTask 1")

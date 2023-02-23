@@ -14,7 +14,7 @@ class Task {
 	/// Дата создания задачи.
 	private(set) var createDate: Date
 	/// Статус выполнения задачи.
-	private(set) var completed: Bool
+	private(set) var isCompleted: Bool
 	/// Заголовок задачи.
 	private(set) var title: String
 
@@ -24,14 +24,14 @@ class Task {
 	///   - date: дата начала задачи
 	init(title: String, completed: Bool = false, date: Date? = nil) {
 		self.title = title
-		self.completed = false
+		self.isCompleted = false
 		self.createDate = date ?? Date()
 	}
 
 	/// Устанавливает статус задачи в состояние выполненной или нет,
 	/// зависит от значения передаваемого параметра.
 	func setCompleted(_ state: Bool) {
-		self.completed = state
+		self.isCompleted = state
 	}
 }
 
@@ -96,7 +96,7 @@ extension RegularTask {
 
 	/// Строковое описание для обычных задач.
 	var description: String {
-		return "[\(completed ? "X" : " ")] RegularTask \(title)"
+		return "[\(isCompleted ? "X" : " ")] RegularTask \(title)"
 	}
 }
 
@@ -105,7 +105,21 @@ extension ImportantTask {
 
 	/// Строковое описание для важных задач.
 	var description: String {
-		return "[\(completed ? "X" : " ")] ImportantTask \(title) Priority \(taskPriority)"
+		return "[\(isCompleted ? "X" : " ")] ImportantTask \(title) Priority \(taskPriority)"
 	}
 
+}
+
+// MARK: extension ImportantTask.TaskPriority
+extension ImportantTask.TaskPriority: CustomStringConvertible {
+	var description: String {
+		switch self {
+		case .high:
+			return "!!!"
+		case .medium:
+			return "!!"
+		case .low:
+			return "!"
+		}
+	}
 }

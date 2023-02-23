@@ -19,7 +19,7 @@ protocol ITaskManager {
 
 	/// Возвращает все невыполненные задачи.
 	/// - Returns: список задач
-	func notCompletedTasks() -> [Task]
+	func uncompletedTasks() -> [Task]
 
 	/// Добавляет задачу в список задач.
 	/// - Parameter task: новая задача
@@ -28,4 +28,8 @@ protocol ITaskManager {
 	/// Удаляет задачу из списка задач.
 	/// - Parameter task: удаляемая задача
 	func delTask(task: Task)
+
+	/// Добавляет список задач.
+	/// - Parameter task: Task
+	func addTasks(tasks: [Task])
 }

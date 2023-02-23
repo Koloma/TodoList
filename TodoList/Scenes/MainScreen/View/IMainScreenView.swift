@@ -7,8 +7,9 @@
 
 import Foundation
 
+
 /// Протокол для MainScreen View.
-protocol IMainScreenView: AnyObject {
+protocol IMainViewController: AnyObject {
 	/// Отобразить данные во View.
-	func render(viewData: ViewData)
+	func render(viewData: MainModel.ViewData)
 }
