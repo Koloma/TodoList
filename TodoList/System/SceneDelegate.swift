@@ -33,13 +33,13 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 //			fatalError("Нету на Main.storyboard MainScreenViewController!")
 //		}
 
-		let viewController = MainScreenViewController()
+		let viewController = MainSceneViewController()
 		let taskManager = OrderedTaskManager(taskManager: TaskManager())
 		let repository: ITaskRepository = TaskRepositoryStub()
 		taskManager.addTasks(tasks: repository.getTasks())
 		let sections = SectionForTaskManagerAdapter(taskManager: taskManager)
 
-		let presenter = MainPresenter(view: viewController, sectionManager: sections)
+		let presenter = MainScenePresenter(view: viewController, sectionManager: sections)
 		viewController.presenter = presenter
 
 		return viewController

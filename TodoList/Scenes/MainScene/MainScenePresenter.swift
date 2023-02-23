@@ -8,7 +8,7 @@
 import Foundation
 
 /// Протокол для MainScreen Presenter.
-protocol IMainPresenter {
+protocol IMainScenePresenter {
 	/// флаг готовности view для отображения данных
 	func viewIsReady()
 	/// событие выбора ячейки
@@ -16,11 +16,11 @@ protocol IMainPresenter {
 }
 
 /// MainScreen Presenter.
-final class MainPresenter: IMainPresenter {
+final class MainScenePresenter: IMainScenePresenter {
 	private var sectionManager: ISectionForTaskManagerAdapter!
-	private weak var view: IMainViewController!
+	private weak var view: IMainSceneViewController!
 
-	init(view: IMainViewController, sectionManager: ISectionForTaskManagerAdapter!) {
+	init(view: IMainSceneViewController, sectionManager: ISectionForTaskManagerAdapter!) {
 		self.sectionManager = sectionManager
 		self.view = view
 	}

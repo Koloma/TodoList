@@ -7,12 +7,12 @@
 
 import UIKit
 
-class MainScreenViewController: UIViewController {
+class MainSceneViewController: UIViewController {
 
 	private let tableView: UITableView = UITableView()
 
 	var viewData: MainModel.ViewData = MainModel.ViewData(tasksBySections: [])
-	var presenter: IMainPresenter?
+	var presenter: IMainScenePresenter?
 
 	
 	// MARK: viewDidLoad
@@ -45,7 +45,7 @@ class MainScreenViewController: UIViewController {
 }
 
 // MARK: extension MainScreenViewController: IMainViewController
-extension MainScreenViewController: IMainViewController {
+extension MainSceneViewController: IMainSceneViewController {
 	func render(viewData: MainModel.ViewData) {
 		self.viewData = viewData
 		tableView.reloadData()
@@ -54,7 +54,7 @@ extension MainScreenViewController: IMainViewController {
 
 
 // MARK: extension MainScreenViewController
-extension MainScreenViewController: UITableViewDataSource, UITableViewDelegate {
+extension MainSceneViewController: UITableViewDataSource, UITableViewDelegate {
 
 	func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
 		let section = viewData.tasksBySections[section]
