@@ -11,43 +11,51 @@ import Foundation
 /// Менеджер по управлению списком задач.
 final class TaskManager: ITaskManager {
 
-	private var tasks:[ITask] = []
+	private var taskList:[Task] = []
 
+	init() {}
 
 	/// Инициализатор TaskManager.
 	/// - Parameter список задач
-	init(tasks: [ITask]) {
-		self.tasks = tasks
+	convenience init(tasks: [Task]) {
+		self.init()
+		self.taskList = tasks
 	}
 
 	/// Возвращает список всех задач.
-	/// - Returns: [ITask]
-	func allTasks() -> [ITask] {
-		return tasks
+	/// - Returns: [Task]
+	public func allTasks() -> [Task] {
+		return taskList
 	}
 
 	/// Возвращает список завершенных задач.
-	/// - Returns: [ITask]
-	func completedTasks() -> [ITask] {
-		return tasks.filter { $0.completed }
+	/// - Returns: [Task]
+	public func completedTasks() -> [Task] {
+		return taskList.filter { $0.isCompleted }
 	}
 
 	/// Возвращает список не завершенных задач.
-	/// - Returns: [ITask]
-	func notCompletedTasks() -> [ITask] {
-		return tasks.filter { !$0.completed }
+	/// - Returns: [Task]
+	public func uncompletedTasks() -> [Task] {
+		return taskList.filter { !$0.isCompleted }
 	}
 
 	/// Добавляет новую задачу к списку задач.
-	/// - Parameter task: ITask
-	func addTask(task: ITask) {
-		tasks.append(task)
+	/// - Parameter task: Task
+	public func addTask(task: Task) {
+		taskList.append(task)
+	}
+
+	/// Добавляет список задач.
+	/// - Parameter task: Task
+	public func addTasks(tasks: [Task]) {
+		taskList.append(contentsOf: tasks)
 	}
 
 	/// Удаляет задачу из списка задач.
-	/// - Parameter task: ITask
-	func delTask (task: ITask) {
-		tasks.removeAll { $0.title == task.title }
+	/// - Parameter task: Task
+	public func delTask (task: Task) {
+		taskList.removeAll { $0.title == task.title }
 	}
 }
 
