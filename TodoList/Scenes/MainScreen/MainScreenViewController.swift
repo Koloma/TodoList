@@ -28,6 +28,7 @@ class MainScreenViewController: UIViewController {
 	// MARK: initViewTableView
 	private func initTableView() {
 		tableView.dataSource = self
+		tableView.delegate = self
 		self.tableView.register(UITableViewCell.self, forCellReuseIdentifier: "cell")
 	}
 
@@ -66,6 +67,10 @@ extension MainScreenViewController: UITableViewDataSource, UITableViewDelegate {
 
 	func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
 		viewData.tasksBySections[section].title
+	}
+
+	func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+		presenter?.didTaskSelected(at: indexPath)
 	}
 
 	func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {

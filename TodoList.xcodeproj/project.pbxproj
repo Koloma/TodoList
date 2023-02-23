@@ -105,9 +105,10 @@
 		201F82A22998B88100B1A7AD /* MainScreen */ = {
 			isa = PBXGroup;
 			children = (
+				20FDB7A129A0E13C00B90A56 /* IMainScreenView.swift */,
+				201F82902998A84600B1A7AD /* MainScreenViewController.swift */,
 				20FDB79B29A0BB5F00B90A56 /* ViewData.swift */,
 				20FDB79829A0B12500B90A56 /* MainScreenPresenter.swift */,
-				20FDB79E29A0BB7D00B90A56 /* View */,
 			);
 			path = MainScreen;
 			sourceTree = "<group>";
@@ -129,15 +130,6 @@
 				20FDB789299D1ED000B90A56 /* Repository.swift */,
 			);
 			path = Repository;
-			sourceTree = "<group>";
-		};
-		20FDB79E29A0BB7D00B90A56 /* View */ = {
-			isa = PBXGroup;
-			children = (
-				201F82902998A84600B1A7AD /* MainScreenViewController.swift */,
-				20FDB7A129A0E13C00B90A56 /* IMainScreenView.swift */,
-			);
-			path = View;
 			sourceTree = "<group>";
 		};
 		9043A539C2A963B6497539EC /* Frameworks */ = {
