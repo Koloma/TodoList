@@ -16,22 +16,30 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 		guard let windowScene = (scene as? UIWindowScene) else { return }
 		let window = UIWindow(windowScene: windowScene)
 
-		window.rootViewController = assembly()
+		window.rootViewController = assemblyLoginScreen()
 		
 		self.window = window
 		window.makeKeyAndVisible()
-
 	}
 
+
+	private func assemblyLoginScreen() -> UIViewController {
+
+		let viewController = LoginSceneViewController()
+		let worker = LoginWorker()
+		let presenter = LoginScenePresenter(viewController: viewController)
+		let interactor = LoginSceneInteractor(worker: worker, presenter: presenter)
+		let router = LoginSceneRouter(viewController: viewController)
+
+		viewController.router = router
+
+		router.viewController = viewController
+
+		return viewController
+	}
+
+
 	private func assembly() -> UIViewController {
-
-		//let storyboard = UIStoryboard(name: "Main", bundle: Bundle.main)
-
-//		guard let viewController = storyboard.instantiateViewController(withIdentifier: "MainScreenViewController")
-//				as? MainScreenViewController
-//		else {
-//			fatalError("Нету на Main.storyboard MainScreenViewController!")
-//		}
 
 		let viewController = MainSceneViewController()
 		let taskManager = OrderedTaskManager(taskManager: TaskManager())
