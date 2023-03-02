@@ -123,6 +123,7 @@ extension LoginSceneViewController: ILoginSceneViewController {
 				message: viewModel.userName,
 				preferredStyle: UIAlertController.Style.alert
 			)
+			router?.routeToMainScene()
 		} else {
 			alert = UIAlertController(
 				title: "Error",

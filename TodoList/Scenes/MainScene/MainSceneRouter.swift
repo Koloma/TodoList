@@ -12,12 +12,12 @@ import UIKit
 	func routeToLoginScene()
 }
 
-protocol IMainSceneDataStorePassing
+protocol IMainSceneDataPassing
 {
 	var dataStore: IMainSceneDataStore? { get }
 }
 
-class MainSceneRouter: NSObject, IMainSceneRouter, IMainSceneDataStorePassing
+class MainSceneRouter: NSObject, IMainSceneRouter, IMainSceneDataPassing
 {
 	weak var viewController: MainSceneViewController?
 	var dataStore: IMainSceneDataStore? = nil
