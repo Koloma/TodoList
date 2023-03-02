@@ -37,10 +37,10 @@ final class MainScenePresenter: IMainScenePresenter {
 		view.render(viewData: mapViewData())
 	}
 
-	private func mapViewData() -> MainModel.ViewData {
-		var sections = [MainModel.ViewData.Section]()
+	private func mapViewData() -> MainSceneModel.ViewData {
+		var sections = [MainSceneModel.ViewData.Section]()
 		for section in sectionManager.getSections() {
-			let sectionData = MainModel.ViewData.Section(
+			let sectionData = MainSceneModel.ViewData.Section(
 				title: section.title,
 				tasks: mapTasksData(tasks: sectionManager.getTasksForSection(section: section) )
 			)
@@ -48,16 +48,16 @@ final class MainScenePresenter: IMainScenePresenter {
 			sections.append(sectionData)
 		}
 
-		return MainModel.ViewData(tasksBySections: sections)
+		return MainSceneModel.ViewData(tasksBySections: sections)
 	}
 
-	private func mapTasksData(tasks: [Task]) -> [MainModel.ViewData.Task] {
+	private func mapTasksData(tasks: [Task]) -> [MainSceneModel.ViewData.Task] {
 		tasks.map{ mapTaskData(task: $0) }
 	}
 
-	private func mapTaskData(task: Task) -> MainModel.ViewData.Task {
+	private func mapTaskData(task: Task) -> MainSceneModel.ViewData.Task {
 		if let task = task as? ImportantTask {
-			let result = MainModel.ViewData.ImportantTask(
+			let result = MainSceneModel.ViewData.ImportantTask(
 				name: task.title,
 				isDone: task.isCompleted,
 				isOverdue: task.deadLine < Date(),
@@ -66,7 +66,7 @@ final class MainScenePresenter: IMainScenePresenter {
 			)
 			return .importantTask(result)
 		} else {
-			return .regularTask(MainModel.ViewData.RegularTask(name: task.title, isDone: task.isCompleted))
+			return .regularTask(MainSceneModel.ViewData.RegularTask(name: task.title, isDone: task.isCompleted))
 		}
 	}
 

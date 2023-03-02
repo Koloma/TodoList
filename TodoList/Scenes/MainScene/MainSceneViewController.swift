@@ -7,11 +7,17 @@
 
 import UIKit
 
+/// Протокол для MainScreen View.
+protocol IMainSceneViewController: AnyObject {
+	/// Отобразить данные во View.
+	func render(viewData: MainSceneModel.ViewData)
+}
+
 class MainSceneViewController: UIViewController {
 
 	private let tableView: UITableView = UITableView()
 
-	var viewData: MainModel.ViewData = MainModel.ViewData(tasksBySections: [])
+	var viewData: MainSceneModel.ViewData = MainSceneModel.ViewData(tasksBySections: [])
 	var presenter: IMainScenePresenter?
 
 	
@@ -46,7 +52,7 @@ class MainSceneViewController: UIViewController {
 
 // MARK: extension MainScreenViewController: IMainViewController
 extension MainSceneViewController: IMainSceneViewController {
-	func render(viewData: MainModel.ViewData) {
+	func render(viewData: MainSceneModel.ViewData) {
 		self.viewData = viewData
 		tableView.reloadData()
 	}

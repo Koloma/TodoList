@@ -22,8 +22,9 @@ class LoginSceneViewController: UIViewController
 	private var interactor: ILoginSceneInteractor?
 	var router: (NSObjectProtocol & ILoginSceneRouter & LoginSceneDataPassing)?
 
-	var textFieldLogin: UITextField = UITextField()
-	var textFieldPass: UITextField = UITextField()
+	private var textFieldLogin: UITextField = UITextField()
+	private var textFieldPass: UITextField = UITextField()
+	private var loginButton: UIButton = UIButton()
 
 	// MARK: Object lifecycle
 	override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?)
@@ -44,11 +45,10 @@ class LoginSceneViewController: UIViewController
 		let viewController = self
 		let worker = LoginWorker()
 		let presenter = LoginScenePresenter(viewController: viewController)
-		let interactor = LoginSceneInteractor(worker: worker, presenter: presenter)
+		self.interactor = LoginSceneInteractor(worker: worker, presenter: presenter)
 		let router = LoginSceneRouter(viewController: viewController)
 		
 		viewController.router = router
-
 
 		router.viewController = viewController
 		//router.dataStore = interactor
@@ -69,9 +69,43 @@ class LoginSceneViewController: UIViewController
 	override func viewDidLoad()
 	{
 		super.viewDidLoad()
+		setupView()
 	}
 
-	@objc func buttonLogin(_ sender: Any) {
+	private func setupView() {
+		view.backgroundColor = .systemBackground
+		view.addSubview(textFieldLogin)
+		textFieldLogin.autocorrectionType = .no
+		textFieldLogin.autocapitalizationType = .none
+		textFieldLogin.placeholder = "Login"
+		textFieldLogin.translatesAutoresizingMaskIntoConstraints = false
+		textFieldLogin.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
+		textFieldLogin.centerYAnchor.constraint(equalTo: view.centerYAnchor).isActive = true
+		textFieldLogin.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 50.0).isActive = true
+		textFieldLogin.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -50.0).isActive = true
+		textFieldLogin.heightAnchor.constraint(equalToConstant: 40.0).isActive = true
+
+		view.addSubview(textFieldPass)
+		textFieldPass.placeholder = "Password"
+		textFieldPass.isSecureTextEntry = true
+		textFieldPass.autocorrectionType = .no
+		textFieldPass.translatesAutoresizingMaskIntoConstraints = false
+		textFieldPass.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
+		textFieldPass.topAnchor.constraint(equalTo: textFieldLogin.bottomAnchor, constant: 16.0).isActive = true
+		textFieldPass.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 50.0).isActive = true
+		textFieldPass.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -50.0).isActive = true
+		textFieldPass.heightAnchor.constraint(equalToConstant: 40.0).isActive = true
+
+		view.addSubview(loginButton)
+
+		loginButton.setTitle("Login", for: .normal)
+		loginButton.translatesAutoresizingMaskIntoConstraints = false
+		loginButton.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
+		loginButton.topAnchor.constraint(equalTo: textFieldPass.bottomAnchor, constant: 16.0).isActive = true
+		loginButton.addTarget(self, action: #selector(buttonLogin), for: .touchUpInside)
+	}
+
+	@objc func buttonLogin(sender:UIButton) {
 		if let email = textFieldLogin.text, let password = textFieldPass.text {
 			let request = LoginSceneModels.Request(login: email, password: password)
 			interactor?.login(request: request)

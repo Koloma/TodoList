@@ -42,7 +42,7 @@ final class LoginWorker: ILoginWorker {
 	/// - Returns: возвращает структуру LoginDTO
 	func login(login: String, password: String) -> LoginDTO {
 
-		if login == "leonovka@ya.ru" && password == "123" {
+		if login == "kav@ya.ru" && password == "123" {
 			return LoginDTO(
 				success: true,
 				login: login,

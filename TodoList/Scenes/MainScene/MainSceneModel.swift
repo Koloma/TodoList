@@ -7,7 +7,7 @@
 
 import Foundation
 
-enum MainModel {
+enum MainSceneModel {
 	/// Структура для передачи данных во View.
 	struct ViewData {
 		/// Данные для отображения RegularTask
