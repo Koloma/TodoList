@@ -34,6 +34,8 @@ protocol ILoginWorker {
 /// Worker отвечающий за авторизацию пользователя
 /// проверку логина и пароля.
 final class LoginWorker: ILoginWorker {
+	private let defaultLogin = "Admin"
+	private let defaultPass = "pa$$32!"
 
 	/// Выполняет проверку введенных логина и пароля.
 	/// - Parameters:
@@ -47,9 +49,7 @@ final class LoginWorker: ILoginWorker {
 		taskManager.addTasks(tasks: repository.getTasks())
 		let sections = SectionForTaskManagerAdapter(taskManager: taskManager)
 
-
-
-		if login == "kav@ya.ru" && password == "123" {
+		if login == defaultLogin && password == defaultPass {
 			return LoginDTO(
 				success: true,
 				login: login,
