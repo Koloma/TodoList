@@ -20,7 +20,7 @@ class LoginSceneViewController: UIViewController
 {
 
 	private var interactor: ILoginSceneInteractor?
-	var router: (NSObjectProtocol & ILoginSceneRouter & LoginSceneDataPassing)?
+	var router: (NSObjectProtocol & ILoginSceneRouter & ILoginSceneDataStore)?
 
 	private var textFieldLogin: UITextField = UITextField()
 	private var textFieldPass: UITextField = UITextField()
@@ -48,7 +48,7 @@ class LoginSceneViewController: UIViewController
 		self.interactor = LoginSceneInteractor(worker: worker, presenter: presenter)
 		let router = LoginSceneRouter(viewController: viewController)
 		
-		viewController.router = router
+		//viewController.router = router
 
 		router.viewController = viewController
 		//router.dataStore = interactor

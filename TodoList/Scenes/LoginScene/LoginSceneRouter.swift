@@ -14,51 +14,53 @@ import UIKit
 
 @objc protocol ILoginSceneRouter
 {
-	
-  //func routeToSomewhere(segue: UIStoryboardSegue?)
+	func routeToMainScene()
 }
 
 protocol LoginSceneDataPassing
 {
-  var dataStore: ILoginSceneDataStore? { get }
+	var dataStore: ILoginSceneDataStore? { get }
 }
 
 class LoginSceneRouter: NSObject, ILoginSceneRouter, LoginSceneDataPassing
 {
-  weak var viewController: LoginSceneViewController?
-  var dataStore: ILoginSceneDataStore? = nil
+	weak var viewController: LoginSceneViewController?
+	var dataStore: ILoginSceneDataStore? = nil
 
 	init(viewController: LoginSceneViewController?) {
 		self.viewController = viewController
 	}
-  // MARK: Routing
-  
-//  func routeToSomewhere(viewController: UIStoryboardSegue?)
-//  {
-//    if let segue = segue {
-//      let destinationVC = segue.destination as! SomewhereViewController
-//      var destinationDS = destinationVC.router!.dataStore!
-//      passDataToSomewhere(source: dataStore!, destination: &destinationDS)
-//    } else {
-//      let storyboard = UIStoryboard(name: "Main", bundle: nil)
-//      let destinationVC = storyboard.instantiateViewController(withIdentifier: "SomewhereViewController") as! SomewhereViewController
-//      var destinationDS = destinationVC.router!.dataStore!
-//      passDataToSomewhere(source: dataStore!, destination: &destinationDS)
-//      navigateToSomewhere(source: viewController!, destination: destinationVC)
-//    }
-//  }
 
-  // MARK: Navigation
-  
-  //func navigateToSomewhere(source: LoginSceneViewController, destination: SomewhereViewController)
-  //{
-  //  source.show(destination, sender: nil)
-  //}
-  
-  // MARK: Passing data
-  
-  //func passDataToSomewhere(source: LoginSceneDataStore, destination: inout SomewhereDataStore)
-  //{
-  //  destination.name = source.name
-  //}
+	func routeToMainScene()
+	{
+		let destinationVC = assemblyMainScreen
+		var destinationDS = destinationVC.router!.dataStore!
+		passDataToSomewhere(source: dataStore!, destination: &destinationDS)
+		navigateToSomewhere(source: viewController, destination: destinationVC)
+	}
+
+	// MARK: Navigation
+	func navigateToSomewhere(source: LoginSceneViewController, destination: MainSceneViewController)
+	{
+	  source.show(destination, sender: nil)
+	}
+
+	// MARK: Passing data
+	func passDataToSomewhere(source: LoginSceneDataStore, destination: inout SomewhereDataStore)
+	{
+	  destination.name = source.name
+	}
+
+	private func assemblyMainScreen() -> MainSceneViewController {
+		let viewController = MainSceneViewController()
+		let taskManager = OrderedTaskManager(taskManager: TaskManager())
+		let repository: ITaskRepository = TaskRepositoryStub()
+		taskManager.addTasks(tasks: repository.getTasks())
+		let sections = SectionForTaskManagerAdapter(taskManager: taskManager)
+
+		let presenter = MainScenePresenter(view: viewController, sectionManager: sections)
+		viewController.presenter = presenter
+
+		return viewController
+	}
 }

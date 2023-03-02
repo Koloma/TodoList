@@ -38,19 +38,5 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 		return viewController
 	}
 
-
-	private func assembly() -> UIViewController {
-
-		let viewController = MainSceneViewController()
-		let taskManager = OrderedTaskManager(taskManager: TaskManager())
-		let repository: ITaskRepository = TaskRepositoryStub()
-		taskManager.addTasks(tasks: repository.getTasks())
-		let sections = SectionForTaskManagerAdapter(taskManager: taskManager)
-
-		let presenter = MainScenePresenter(view: viewController, sectionManager: sections)
-		viewController.presenter = presenter
-
-		return viewController
-	}
 }
 

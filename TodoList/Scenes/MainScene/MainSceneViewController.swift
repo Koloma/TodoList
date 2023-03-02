@@ -10,15 +10,18 @@ import UIKit
 /// Протокол для MainScreen View.
 protocol IMainSceneViewController: AnyObject {
 	/// Отобразить данные во View.
-	func render(viewData: MainSceneModel.ViewData)
+	func render(viewData: MainSceneModel.ViewModel)
 }
 
 class MainSceneViewController: UIViewController {
 
+	private var interactor: IMainSceneInteractor?
+	var router: (NSObjectProtocol & IMainSceneRouter & IMainSceneDataStore)?
+
 	private let tableView: UITableView = UITableView()
 
-	var viewData: MainSceneModel.ViewData = MainSceneModel.ViewData(tasksBySections: [])
-	var presenter: IMainScenePresenter?
+	var viewData: MainSceneModel.ViewModel = MainSceneModel.ViewModel(tasksBySections: [])
+	//var presenter: IMainScenePresenter?
 
 	
 	// MARK: viewDidLoad
@@ -28,7 +31,7 @@ class MainSceneViewController: UIViewController {
 		initView()
 		initTableView()
 
-		presenter?.viewIsReady()
+		//presenter?.viewIsReady()
 	}
 
 	// MARK: initViewTableView
@@ -52,7 +55,7 @@ class MainSceneViewController: UIViewController {
 
 // MARK: extension MainScreenViewController: IMainViewController
 extension MainSceneViewController: IMainSceneViewController {
-	func render(viewData: MainSceneModel.ViewData) {
+	func render(viewData: MainSceneModel.ViewModel) {
 		self.viewData = viewData
 		tableView.reloadData()
 	}
@@ -76,7 +79,8 @@ extension MainSceneViewController: UITableViewDataSource, UITableViewDelegate {
 	}
 
 	func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-		presenter?.didTaskSelected(at: indexPath)
+		let request = MainSceneModel.Request(selectedTask: indexPath)
+		interactor?.didTaskSelected(request: request)
 	}
 
 	func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {

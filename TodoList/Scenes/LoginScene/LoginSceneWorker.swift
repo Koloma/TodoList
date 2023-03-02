@@ -42,6 +42,13 @@ final class LoginWorker: ILoginWorker {
 	/// - Returns: возвращает структуру LoginDTO
 	func login(login: String, password: String) -> LoginDTO {
 
+		let taskManager = OrderedTaskManager(taskManager: TaskManager())
+		let repository: ITaskRepository = TaskRepositoryStub()
+		taskManager.addTasks(tasks: repository.getTasks())
+		let sections = SectionForTaskManagerAdapter(taskManager: taskManager)
+
+
+
 		if login == "kav@ya.ru" && password == "123" {
 			return LoginDTO(
 				success: true,

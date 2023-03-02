@@ -8,8 +8,18 @@
 import Foundation
 
 enum MainSceneModel {
-	/// Структура для передачи данных во View.
-	struct ViewData {
+
+	struct Request {
+		var selectedTask: IndexPath
+	}
+
+	struct Responce {
+		var success: Bool
+		var login: String
+		var lastLoginDate: Date
+	}
+
+	struct ViewModel {
 		/// Данные для отображения RegularTask
 		struct RegularTask {
 			let name: String
