@@ -13,10 +13,8 @@ enum MainSceneModel {
 		var selectedTask: IndexPath
 	}
 
-	struct Responce {
-		var success: Bool
-		var login: String
-		var lastLoginDate: Date
+	struct Response {
+		var tasks: [Task]
 	}
 
 	struct ViewModel {

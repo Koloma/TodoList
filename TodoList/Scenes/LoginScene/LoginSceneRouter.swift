@@ -33,9 +33,10 @@ class LoginSceneRouter: NSObject, ILoginSceneRouter, LoginSceneDataPassing
 
 	func routeToMainScene()
 	{
-		let destinationVC = assemblyMainScreen
-		var destinationDS = destinationVC.router!.dataStore!
-		passDataToSomewhere(source: dataStore!, destination: &destinationDS)
+		let destinationVC = assemblyMainScreen()
+		//var destinationDS = destinationVC.router!.dataStore!
+		//passDataToSomewhere(source: dataStore!, destination: &destinationDS)
+		guard let viewController = viewController else { return }
 		navigateToSomewhere(source: viewController, destination: destinationVC)
 	}
 
@@ -46,10 +47,10 @@ class LoginSceneRouter: NSObject, ILoginSceneRouter, LoginSceneDataPassing
 	}
 
 	// MARK: Passing data
-	func passDataToSomewhere(source: LoginSceneDataStore, destination: inout SomewhereDataStore)
-	{
-	  destination.name = source.name
-	}
+//	func passDataToSomewhere(source: LoginSceneDataStore, destination: inout SomewhereDataStore)
+//	{
+//	  destination.name = source.name
+//	}
 
 	private func assemblyMainScreen() -> MainSceneViewController {
 		let viewController = MainSceneViewController()
@@ -58,8 +59,8 @@ class LoginSceneRouter: NSObject, ILoginSceneRouter, LoginSceneDataPassing
 		taskManager.addTasks(tasks: repository.getTasks())
 		let sections = SectionForTaskManagerAdapter(taskManager: taskManager)
 
-		let presenter = MainScenePresenter(view: viewController, sectionManager: sections)
-		viewController.presenter = presenter
+		//let presenter = MainScenePresenter(view: viewController, sectionManager: sections)
+		//viewController.presenter = presenter
 
 		return viewController
 	}

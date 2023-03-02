@@ -32,17 +32,12 @@ class MainSceneInteractor: IMainSceneInteractor {
 
 	func didTaskSelected(request: MainSceneModel.Request) {
 
-		worker.setComplete(forIndexPath: request.indexPath)
+		let result = worker.setComplete(forIndexPath: request.selectedTask)
 
-
-		let result = worker.login(login: request.login, password: request.password)
-
-		let responce = LoginSceneModels.Responce(
-			success: result.success,
-			login: result.login,
-			lastLoginDate: result.lastLoginDate
+		let response = MainSceneModel.Response(
+			tasks: result.tasks
 		)
 
-		presenter?.present(responce: responce)
+		presenter?.present(responce: response)
 	}
 }

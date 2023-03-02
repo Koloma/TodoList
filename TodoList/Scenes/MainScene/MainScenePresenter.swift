@@ -9,10 +9,7 @@ import Foundation
 
 /// Протокол для MainScreen Presenter.
 protocol IMainScenePresenter {
-	/// флаг готовности view для отображения данных
-	func viewIsReady()
-	/// событие выбора ячейки
-	func didTaskSelected(at indexPath: IndexPath)
+	func present(responce: MainSceneModel.Response)
 }
 
 /// MainScreen Presenter.
@@ -25,15 +22,7 @@ final class MainScenePresenter: IMainScenePresenter {
 		self.view = view
 	}
 
-	func viewIsReady() {
-		view?.render(viewData: mapViewData())
-	}
-
-	func didTaskSelected(at indexPath: IndexPath) {
-		let section = sectionManager.getSection(forIndex: indexPath.section)
-		let task = sectionManager.getTasksForSection(section: section)[indexPath.row]
-
-		task.setCompleted(!task.isCompleted)
+	func present(responce: MainSceneModel.Response) {
 		view.render(viewData: mapViewData())
 	}
 
@@ -44,7 +33,6 @@ final class MainScenePresenter: IMainScenePresenter {
 				title: section.title,
 				tasks: mapTasksData(tasks: sectionManager.getTasksForSection(section: section) )
 			)
-
 			sections.append(sectionData)
 		}
 

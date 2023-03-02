@@ -23,7 +23,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 	}
 
 
-	private func assemblyLoginScreen() -> UIViewController {
+	private func assemblyLoginScreen() -> LoginSceneViewController {
 
 		let viewController = LoginSceneViewController()
 		let worker = LoginWorker()
