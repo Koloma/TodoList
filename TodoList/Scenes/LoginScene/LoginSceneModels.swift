@@ -14,8 +14,7 @@ import UIKit
 
 /// Clean Swift Models передаваемые между
 /// IInteractor, Presenter и ViewController
-enum LoginSceneModels
-{
+enum LoginSceneModels {
 	struct Request {
 		var login: String
 		var password: String
@@ -32,5 +31,4 @@ enum LoginSceneModels
 		var userName: String
 		var lastLoginDate: String
 	}
-
 }

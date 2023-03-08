@@ -17,7 +17,6 @@ final class OrderedTaskManager: ITaskManager {
 		self.taskManager = taskManager
 	}
 
-
 	/// Возвращает список всех отсортированных задач.
 	func allTasks() -> [Task] {
 		return sorted(tasks: taskManager.allTasks())
@@ -42,7 +41,6 @@ final class OrderedTaskManager: ITaskManager {
 	func addTasks(tasks: [Task]) {
 		taskManager.addTasks(tasks: tasks)
 	}
-
 
 	/// Удалить задачу и списка задач.
 	func delTask(task: Task) {

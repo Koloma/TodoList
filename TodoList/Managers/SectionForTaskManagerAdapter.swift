@@ -59,7 +59,7 @@ final class SectionForTaskManagerAdapter: ISectionForTaskManagerAdapter {
 	/// - Returns: список задач
 	func getSectionsItems(section sectionIndex: Int) -> [Task] {
 		switch sectionIndex {
-		case 0:
+		case Int.zero:
 			return taskManager.uncompletedTasks()
 		default:
 			return taskManager.completedTasks()
@@ -75,8 +75,8 @@ final class SectionForTaskManagerAdapter: ISectionForTaskManagerAdapter {
 	}
 
 	func getSection(forIndex index: Int) -> Section {
-		let i = min(index, sections.count - 1)
-		return sections[i]
+		let id = min(index, sections.count - 1)
+		return sections[id]
 	}
 
 	func getTasksForSection(section: Section) -> [Task] {
@@ -90,9 +90,9 @@ final class SectionForTaskManagerAdapter: ISectionForTaskManagerAdapter {
 
 	func taskSectionAndIndex(task: Task) -> (section: Section, index: Int)? {
 		for section in sections {
-			let index = getTasksForSection(section: section).firstIndex{ task === $0 }
-			if index != nil {
-				return (section, index!)
+			let index = getTasksForSection(section: section).firstIndex { task === $0 }
+			if let index = index {
+				return (section, index)
 			}
 		}
 		return nil

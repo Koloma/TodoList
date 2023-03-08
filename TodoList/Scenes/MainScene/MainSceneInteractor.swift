@@ -7,7 +7,7 @@
 
 import Foundation
 
-protocol IMainSceneDataStore{
+protocol IMainSceneDataStore {
 	var email: String? { get set }
 	var login: String? { get set }
 	var lastLoginDate: Date? { get set }
@@ -25,14 +25,12 @@ class MainSceneInteractor: IMainSceneInteractor, IMainSceneDataStore {
 
 	private var worker: IMainSceneWorker
 	private var presenter: IMainScenePresenter?
-	var dataStrore: IMainSceneDataStore? = nil
-
+	var dataStrore: IMainSceneDataStore?
 
 	init(worker: IMainSceneWorker, presenter: IMainScenePresenter?) {
 		self.worker = worker
 		self.presenter = presenter
 	}
-
 
 	func viewIsReady() {
 		let result = worker.getTasks()

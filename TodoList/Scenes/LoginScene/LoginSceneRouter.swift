@@ -12,43 +12,34 @@
 
 import UIKit
 
-@objc protocol ILoginSceneRouter
-{
+@objc protocol ILoginSceneRouter {
 	func routeToMainScene()
 }
 
-protocol ILoginSceneDataPassing
-{
+protocol ILoginSceneDataPassing {
 	var dataStore: ILoginSceneDataStore? { get }
 }
 
-class LoginSceneRouter: NSObject, ILoginSceneRouter, ILoginSceneDataPassing
-{
+class LoginSceneRouter: NSObject, ILoginSceneRouter, ILoginSceneDataPassing {
 	weak var viewController: LoginSceneViewController?
 	var dataStore: ILoginSceneDataStore?
 
-	func routeToMainScene()
-	{
+	func routeToMainScene() {
 		let destinationVC = assemblyMainScreen()
 		guard
-			let sourceVC = viewController,
-			let _ = dataStore
-			//var destinationDS = destinationVC.router?.dataStore
+			let sourceVC = viewController
 		else { fatalError("Fail route to MainSceneViewController")}
 
-		//passDataToMainScene(source: loginDS, destination: &destinationDS)
 		navigateToMainScene(source: sourceVC, destination: destinationVC)
 	}
 
 	// MARK: Navigation
-	func navigateToMainScene(source: LoginSceneViewController, destination: MainSceneViewController)
-	{
+	func navigateToMainScene(source: LoginSceneViewController, destination: MainSceneViewController) {
 		source.navigationController?.pushViewController(destination, animated: true)
 	}
 
 	// MARK: Passing data
-	func passDataToMainScene(source: ILoginSceneDataStore, destination: inout IMainSceneDataStore)
-	{
+	func passDataToMainScene(source: ILoginSceneDataStore, destination: inout IMainSceneDataStore) {
 		destination.lastLoginDate = source.lastLoginDate ?? Date()
 		destination.login = source.login ?? ""
 		destination.email = source.email ?? ""

@@ -14,9 +14,7 @@ protocol IMainSceneDataPassing {
 	var dataStore: IMainSceneDataStore? { get }
 }
 
-class MainSceneRouter: NSObject, IMainSceneRouter, IMainSceneDataPassing
-{
+class MainSceneRouter: NSObject, IMainSceneRouter, IMainSceneDataPassing {
 	weak var viewController: MainSceneViewController?
 	var dataStore: IMainSceneDataStore?
-
 }
