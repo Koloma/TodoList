@@ -7,7 +7,7 @@
 
 import Foundation
 
-/// Структура LoginDTO
+/// Структура MainDTO
 public struct MainDTO {
 	var tasks: [Task]
 }
@@ -15,7 +15,7 @@ public struct MainDTO {
 
 /// Интерфейс ILoginWorker.
 protocol IMainSceneWorker {
-	func setComplete(forIndexPath: IndexPath) -> MainDTO
+	func setComplete(taskTitle: String) -> MainDTO
 	func getTasks() -> MainDTO
 }
 
@@ -24,15 +24,11 @@ protocol IMainSceneWorker {
 final class MainSceneWorker: IMainSceneWorker {
 
 	let taskRepository: ITaskRepository
-	let sectionManager: ISectionForTaskManagerAdapter
-	let taskManager: ITaskManager
 	var tasks: [Task] = []
 
 	init() {
 		taskRepository = TaskRepositoryStub()
-		let tmpTaskManager = TaskManager(tasks: taskRepository.getTasks())
-		taskManager = OrderedTaskManager(taskManager: tmpTaskManager)
-		sectionManager = SectionForTaskManagerAdapter(taskManager: taskManager)
+		tasks = taskRepository.getTasks()
 	}
 
 	func login(login: String, password: String) -> LoginDTO {
@@ -56,12 +52,12 @@ final class MainSceneWorker: IMainSceneWorker {
 		return MainDTO(tasks: tasks)
 	}
 
-	func setComplete(forIndexPath: IndexPath) -> MainDTO {
+	func setComplete(taskTitle: String) -> MainDTO {
 
-		let section = sectionManager.getSection(forIndex: forIndexPath.section)
-		let task = sectionManager.getTasksForSection(section: section)[forIndexPath.row]
 
-		task.setCompleted(!task.isCompleted)
+		if let task = tasks.first(where: {$0.title == taskTitle}) {
+			task.setCompleted(!task.isCompleted)
+		}
 
 		return MainDTO(tasks: tasks)
 

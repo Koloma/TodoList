@@ -7,52 +7,16 @@
 
 import UIKit
 
-@objc protocol IMainSceneRouter
-{
-	func routeToLoginScene()
+@objc protocol IMainSceneRouter {
 }
 
-protocol IMainSceneDataPassing
-{
+protocol IMainSceneDataPassing {
 	var dataStore: IMainSceneDataStore? { get }
 }
 
 class MainSceneRouter: NSObject, IMainSceneRouter, IMainSceneDataPassing
 {
 	weak var viewController: MainSceneViewController?
-	var dataStore: IMainSceneDataStore? = nil
+	var dataStore: IMainSceneDataStore?
 
-	init(viewController: MainSceneViewController?) {
-		self.viewController = viewController
-	}
-
-	func routeToLoginScene()
-	{
-		let destinationVC = assemblyMainScreen()
-		var destinationDS = destinationVC.router!.dataStore!
-		passDataToSomewhere(source: dataStore!, destination: &destinationDS)
-		navigateToSomewhere(source: viewController, destination: destinationVC)
-	}
-
-	// MARK: Navigation
-	func navigateToSomewhere(source: MainSceneViewController, destination: LoginSceneViewController)
-	{
-		source.navigationController?.pushViewController(destination, animated: true)
-	}
-
-	// MARK: Passing data
-	func passDataToSomewhere(source: LoginSceneDataStore, destination: inout MainSceneDataStore)
-	{
-		destination.name = source.name
-	}
-
-	private func assemblyMainScreen() -> MainSceneViewController {
-		let viewController = MainSceneViewController()
-		let taskManager = OrderedTaskManager(taskManager: TaskManager())
-		let repository: ITaskRepository = TaskRepositoryStub()
-		taskManager.addTasks(tasks: repository.getTasks())
-		let sections = SectionForTaskManagerAdapter(taskManager: taskManager)
-
-		return viewController
-	}
 }

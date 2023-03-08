@@ -9,19 +9,23 @@ import Foundation
 
 protocol IMainSceneDataStore{
 	var email: String? { get set }
-	var password: String? { get set }
-	var success: Bool { get set }
-	var login: String { get set }
-	var lastLoginDate: Date { get set }
+	var login: String? { get set }
+	var lastLoginDate: Date? { get set }
 }
 
 protocol IMainSceneInteractor {
 	func didTaskSelected(request: MainSceneModel.Request)
+	func viewIsReady()
 }
 
-class MainSceneInteractor: IMainSceneInteractor {
+class MainSceneInteractor: IMainSceneInteractor, IMainSceneDataStore {
+	var email: String?
+	var login: String?
+	var lastLoginDate: Date?
+
 	private var worker: IMainSceneWorker
 	private var presenter: IMainScenePresenter?
+	var dataStrore: IMainSceneDataStore? = nil
 
 
 	init(worker: IMainSceneWorker, presenter: IMainScenePresenter?) {
@@ -30,14 +34,24 @@ class MainSceneInteractor: IMainSceneInteractor {
 	}
 
 
-	func didTaskSelected(request: MainSceneModel.Request) {
-
-		let result = worker.setComplete(forIndexPath: request.selectedTask)
+	func viewIsReady() {
+		let result = worker.getTasks()
 
 		let response = MainSceneModel.Response(
 			tasks: result.tasks
 		)
 
-		presenter?.present(responce: response)
+		presenter?.present(response: response)
+	}
+
+	func didTaskSelected(request: MainSceneModel.Request) {
+
+		let result = worker.setComplete(taskTitle: request.selectedTaskTitle)
+
+		let response = MainSceneModel.Response(
+			tasks: result.tasks
+		)
+
+		presenter?.present(response: response)
 	}
 }

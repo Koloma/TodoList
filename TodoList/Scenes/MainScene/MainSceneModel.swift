@@ -10,7 +10,7 @@ import Foundation
 enum MainSceneModel {
 
 	struct Request {
-		var selectedTask: IndexPath
+		var selectedTaskTitle: String
 	}
 
 	struct Response {

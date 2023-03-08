@@ -17,27 +17,27 @@ import UIKit
 	func routeToMainScene()
 }
 
-protocol LoginSceneDataPassing
+protocol ILoginSceneDataPassing
 {
 	var dataStore: ILoginSceneDataStore? { get }
 }
 
-class LoginSceneRouter: NSObject, ILoginSceneRouter, LoginSceneDataPassing
+class LoginSceneRouter: NSObject, ILoginSceneRouter, ILoginSceneDataPassing
 {
 	weak var viewController: LoginSceneViewController?
-	var dataStore: ILoginSceneDataStore? = nil
-
-	init(viewController: LoginSceneViewController?) {
-		self.viewController = viewController
-	}
+	var dataStore: ILoginSceneDataStore?
 
 	func routeToMainScene()
 	{
 		let destinationVC = assemblyMainScreen()
-		var destinationDS = destinationVC.router!.dataStore!
-		passDataToSomewhere(source: dataStore!, destination: &destinationDS)
-		guard let viewController = viewController else { return }
-		navigateToMainScene(source: viewController, destination: destinationVC)
+		guard
+			let sourceVC = viewController,
+			let loginDS = dataStore
+			//var destinationDS = destinationVC.router?.dataStore
+		else { fatalError("Fail route to MainSceneViewController")}
+
+		//passDataToMainScene(source: loginDS, destination: &destinationDS)
+		navigateToMainScene(source: sourceVC, destination: destinationVC)
 	}
 
 	// MARK: Navigation
@@ -47,20 +47,24 @@ class LoginSceneRouter: NSObject, ILoginSceneRouter, LoginSceneDataPassing
 	}
 
 	// MARK: Passing data
-	func passDataToSomewhere(source: LoginSceneDataStore, destination: inout MainSceneDataStore)
+	func passDataToMainScene(source: ILoginSceneDataStore, destination: inout IMainSceneDataStore)
 	{
-		destination.name = source.name
+		destination.lastLoginDate = source.lastLoginDate ?? Date()
+		destination.login = source.login ?? ""
+		destination.email = source.email ?? ""
 	}
 
 	private func assemblyMainScreen() -> MainSceneViewController {
 		let viewController = MainSceneViewController()
-		let taskManager = OrderedTaskManager(taskManager: TaskManager())
-		let repository: ITaskRepository = TaskRepositoryStub()
-		taskManager.addTasks(tasks: repository.getTasks())
-		let sections = SectionForTaskManagerAdapter(taskManager: taskManager)
 
-		let presenter = MainScenePresenter(view: viewController, sectionManager: sections)
-		viewController.presenter = presenter
+		let presenter = MainScenePresenter(view: viewController)
+		let mainSceneWorker = MainSceneWorker()
+		let interactor = MainSceneInteractor(worker: mainSceneWorker, presenter: presenter)
+		let router = MainSceneRouter()
+
+		viewController.interactor = interactor
+		router.viewController = viewController
+		router.dataStore = interactor
 
 		return viewController
 	}

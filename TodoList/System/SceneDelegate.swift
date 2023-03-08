@@ -31,11 +31,12 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 		let worker = LoginWorker()
 		let presenter = LoginScenePresenter(viewController: viewController)
 		let interactor = LoginSceneInteractor(worker: worker, presenter: presenter)
-		let router = LoginSceneRouter(viewController: viewController)
+		let router = LoginSceneRouter()
 
-		//viewController.router = router
+		viewController.router = router
 
 		router.viewController = viewController
+		router.dataStore = interactor
 
 		return viewController
 	}

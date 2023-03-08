@@ -15,19 +15,24 @@ import UIKit
 protocol ILoginSceneDataStore{
 	var email: String? { get set }
 	var password: String? { get set }
-	var success: Bool { get set }
-	var login: String { get set }
-	var lastLoginDate: Date { get set }
+	var success: Bool? { get set }
+	var login: String? { get set }
+	var lastLoginDate: Date? { get set }
 }
 
 protocol ILoginSceneInteractor {
 	func login(request: LoginSceneModels.Request)
 }
 
-class LoginSceneInteractor: ILoginSceneInteractor {
+class LoginSceneInteractor: ILoginSceneInteractor, ILoginSceneDataStore {
+	var email: String?
+	var password: String?
+	var success: Bool?
+	var login: String?
+	var lastLoginDate: Date?
+
 	private var worker: ILoginWorker
 	private var presenter: ILoginScenePresenter?
-
 
 	init(worker: ILoginWorker, presenter: ILoginScenePresenter?) {
 		self.worker = worker

@@ -9,20 +9,32 @@ import Foundation
 
 /// Протокол для MainScreen Presenter.
 protocol IMainScenePresenter {
-	func present(responce: MainSceneModel.Response)
+	func present(response: MainSceneModel.Response)
 }
 
 /// MainScreen Presenter.
 final class MainScenePresenter: IMainScenePresenter {
-	private var sectionManager: ISectionForTaskManagerAdapter!
+	private var sectionManager: ISectionForTaskManagerAdapter
 	private weak var view: IMainSceneViewController!
 
-	init(view: IMainSceneViewController, sectionManager: ISectionForTaskManagerAdapter!) {
-		self.sectionManager = sectionManager
+	private var taskManager: ITaskManager?
+
+
+	init(view: IMainSceneViewController) {
 		self.view = view
+
+		let tmpTaskManager = TaskManager(tasks: [])
+		taskManager = OrderedTaskManager(taskManager: tmpTaskManager)
+		sectionManager = SectionForTaskManagerAdapter(taskManager: tmpTaskManager)
+
 	}
 
-	func present(responce: MainSceneModel.Response) {
+	func present(response: MainSceneModel.Response) {
+
+		let tmpTaskManager = TaskManager(tasks: response.tasks)
+		taskManager = OrderedTaskManager(taskManager: tmpTaskManager)
+		sectionManager = SectionForTaskManagerAdapter(taskManager: tmpTaskManager)
+
 		view.render(viewData: mapViewData())
 	}
 

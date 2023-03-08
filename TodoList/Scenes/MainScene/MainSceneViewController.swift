@@ -14,15 +14,12 @@ protocol IMainSceneViewController: AnyObject {
 }
 
 class MainSceneViewController: UIViewController {
-
-	private var interactor: IMainSceneInteractor?
-	var router: (NSObjectProtocol & IMainSceneRouter & IMainSceneDataStore)?
+	private(set) var router: (NSObjectProtocol & IMainSceneRouter & IMainSceneDataPassing)?
+	var interactor: IMainSceneInteractor?
 
 	private let tableView: UITableView = UITableView()
 
 	var viewData: MainSceneModel.ViewModel = MainSceneModel.ViewModel(tasksBySections: [])
-	//var presenter: IMainScenePresenter?
-
 	
 	// MARK: viewDidLoad
 	override func viewDidLoad() {
@@ -30,8 +27,7 @@ class MainSceneViewController: UIViewController {
 
 		initView()
 		initTableView()
-
-		//presenter?.viewIsReady()
+		interactor?.viewIsReady()
 	}
 
 	// MARK: initViewTableView
@@ -79,8 +75,16 @@ extension MainSceneViewController: UITableViewDataSource, UITableViewDelegate {
 	}
 
 	func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-		let request = MainSceneModel.Request(selectedTask: indexPath)
-		interactor?.didTaskSelected(request: request)
+		let tasks = viewData.tasksBySections[indexPath.section].tasks
+		let taskData = tasks[indexPath.row]
+		switch taskData {
+		case .importantTask(let task):
+			let request = MainSceneModel.Request(selectedTaskTitle: task.name)
+			interactor?.didTaskSelected(request: request)
+		case .regularTask(let task):
+			let request = MainSceneModel.Request(selectedTaskTitle: task.name)
+			interactor?.didTaskSelected(request: request)
+		}
 	}
 
 	func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {

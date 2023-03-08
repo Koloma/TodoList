@@ -21,8 +21,7 @@ class LoginSceneViewController: UIViewController
 {
 
 	private var interactor: ILoginSceneInteractor?
-	var router: (NSObjectProtocol & ILoginSceneRouter & ILoginSceneDataStore)?
-	let data: ILoginSceneDataStore?
+	var router: (NSObjectProtocol & ILoginSceneRouter & ILoginSceneDataPassing)?
 
 	private var textFieldLogin: UITextField = UITextField()
 	private var textFieldPass: UITextField = UITextField()
@@ -48,12 +47,12 @@ class LoginSceneViewController: UIViewController
 		let worker = LoginWorker()
 		let presenter = LoginScenePresenter(viewController: viewController)
 		self.interactor = LoginSceneInteractor(worker: worker, presenter: presenter)
-		let router = LoginSceneRouter(viewController: viewController)
+		let router = LoginSceneRouter()
 		
-		//viewController.router = router
+		viewController.router = router
 
 		router.viewController = viewController
-		//router.dataStore = interactor
+
 	}
 
 	// MARK: Routing
@@ -77,6 +76,11 @@ class LoginSceneViewController: UIViewController
 	// MARK: setupView()
 	private func setupView() {
 		view.backgroundColor = .systemBackground
+#if DEBUG
+		textFieldLogin.text = "Admin"
+		textFieldPass.text = "pa$$32!"
+#endif
+
 		view.addSubview(textFieldLogin)
 		textFieldLogin.autocorrectionType = .no
 		textFieldLogin.autocapitalizationType = .none
@@ -127,12 +131,8 @@ extension LoginSceneViewController: ILoginSceneViewController {
 		let alert: UIAlertController
 
 		if viewModel.success {
-			alert = UIAlertController(
-				title: "Success",
-				message: viewModel.userName,
-				preferredStyle: UIAlertController.Style.alert
-			)
 			router?.routeToMainScene()
+			return
 		} else {
 			alert = UIAlertController(
 				title: "Error",
