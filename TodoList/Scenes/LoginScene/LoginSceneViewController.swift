@@ -21,9 +21,9 @@ class LoginSceneViewController: UIViewController {
 	private var interactor: ILoginSceneInteractor?
 	var router: (NSObjectProtocol & ILoginSceneRouter & ILoginSceneDataPassing)?
 
-	private var textFieldLogin: UITextField = UITextField()
-	private var textFieldPass: UITextField = UITextField()
-	private var loginButton: UIButton = UIButton()
+	private var textFieldLogin = UITextField()
+	private var textFieldPass = UITextField()
+	private var loginButton = UIButton()
 
 	// MARK: Object lifecycle
 	override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
@@ -47,7 +47,6 @@ class LoginSceneViewController: UIViewController {
 		viewController.router = router
 
 		router.viewController = viewController
-
 	}
 
 	// MARK: Routing

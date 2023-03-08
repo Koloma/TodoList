@@ -31,5 +31,4 @@ enum LoginSceneModels {
 		var userName: String
 		var lastLoginDate: String
 	}
-
 }

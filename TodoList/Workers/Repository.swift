@@ -20,16 +20,18 @@ final class TaskRepositoryStub: ITaskRepository {
 	func getTasks() -> [Task] {
 		let task = RegularTask(title: "RegTask 2")
 		task.setCompleted(true)
-		return  [ RegularTask(title: "RegTask 1"),
-				  ImportantTask(
-					title: "ImportantTask 1",
-					taskPriority: .low,
-					date: Date(timeIntervalSinceNow: -1000000)
-				  ),
-				  task,
-				  RegularTask(title: "RegTask 3"),
-				  ImportantTask(title: "ImportantTask 2", taskPriority: .high),
-				  ImportantTask(title: "ImportantTask 2", taskPriority: .medium)
+		let importantTask = ImportantTask(
+			title: "ImportantTask 1",
+			taskPriority: .low,
+			date: Date(timeIntervalSinceNow: -1000000)
+		)
+		return [
+			RegularTask(title: "RegTask 1"),
+			importantTask,
+			task,
+			RegularTask(title: "RegTask 3"),
+			ImportantTask(title: "ImportantTask 2", taskPriority: .high),
+			ImportantTask(title: "ImportantTask 2", taskPriority: .medium)
 		]
 	}
 }

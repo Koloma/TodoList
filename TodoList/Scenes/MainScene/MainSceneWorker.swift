@@ -53,12 +53,10 @@ final class MainSceneWorker: IMainSceneWorker {
 
 	func setComplete(taskTitle: String) -> MainDTO {
 
-		if let task = tasks.first(where: {$0.title == taskTitle}) {
+		if let task = tasks.first(where: { $0.title == taskTitle }) {
 			task.setCompleted(!task.isCompleted)
 		}
 
 		return MainDTO(tasks: tasks)
-
 	}
-
 }

@@ -15,7 +15,7 @@ protocol IMainScenePresenter {
 /// MainScreen Presenter.
 final class MainScenePresenter: IMainScenePresenter {
 	private var sectionManager: ISectionForTaskManagerAdapter
-	private weak var view: IMainSceneViewController!
+	private weak var view: IMainSceneViewController?
 
 	private var taskManager: ITaskManager?
 
@@ -25,7 +25,6 @@ final class MainScenePresenter: IMainScenePresenter {
 		let tmpTaskManager = TaskManager(tasks: [])
 		taskManager = OrderedTaskManager(taskManager: tmpTaskManager)
 		sectionManager = SectionForTaskManagerAdapter(taskManager: tmpTaskManager)
-
 	}
 
 	func present(response: MainSceneModel.Response) {
@@ -34,7 +33,7 @@ final class MainScenePresenter: IMainScenePresenter {
 		taskManager = OrderedTaskManager(taskManager: tmpTaskManager)
 		sectionManager = SectionForTaskManagerAdapter(taskManager: tmpTaskManager)
 
-		view.render(viewData: mapViewData())
+		view?.render(viewData: mapViewData())
 	}
 
 	private func mapViewData() -> MainSceneModel.ViewModel {
@@ -68,5 +67,4 @@ final class MainScenePresenter: IMainScenePresenter {
 			return .regularTask(MainSceneModel.ViewModel.RegularTask(name: task.title, isDone: task.isCompleted))
 		}
 	}
-
 }

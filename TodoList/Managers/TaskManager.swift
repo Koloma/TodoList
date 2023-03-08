@@ -23,37 +23,37 @@ final class TaskManager: ITaskManager {
 
 	/// Возвращает список всех задач.
 	/// - Returns: [Task]
-	public func allTasks() -> [Task] {
+	func allTasks() -> [Task] {
 		return taskList
 	}
 
 	/// Возвращает список завершенных задач.
 	/// - Returns: [Task]
-	public func completedTasks() -> [Task] {
+	func completedTasks() -> [Task] {
 		return taskList.filter { $0.isCompleted }
 	}
 
 	/// Возвращает список не завершенных задач.
 	/// - Returns: [Task]
-	public func uncompletedTasks() -> [Task] {
+	func uncompletedTasks() -> [Task] {
 		return taskList.filter { !$0.isCompleted }
 	}
 
 	/// Добавляет новую задачу к списку задач.
 	/// - Parameter task: Task
-	public func addTask(task: Task) {
+	func addTask(task: Task) {
 		taskList.append(task)
 	}
 
 	/// Добавляет список задач.
 	/// - Parameter task: Task
-	public func addTasks(tasks: [Task]) {
+	func addTasks(tasks: [Task]) {
 		taskList.append(contentsOf: tasks)
 	}
 
 	/// Удаляет задачу из списка задач.
 	/// - Parameter task: Task
-	public func delTask (task: Task) {
+	func delTask (task: Task) {
 		taskList.removeAll { $0.title == task.title }
 	}
 }

@@ -31,8 +31,9 @@ class MainScreenUnitBuilder: UnitBuilder {
 		}
 
 		let viewData = ViewData(
-			sectionsTitles: sectionForTaskManagerAdapter.getSectionsTitles()
-			, sectionsItems: sectionsItems)
+			sectionsTitles: sectionForTaskManagerAdapter.getSectionsTitles(),
+			sectionsItems: sectionsItems
+		)
 
 		let viewController = MainScreenViewController()
 		let presenter = MainScreenPresenter(view: viewController, viewData: viewData)
@@ -40,5 +41,4 @@ class MainScreenUnitBuilder: UnitBuilder {
 
 		return viewController
 	}
-
 }

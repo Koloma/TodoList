@@ -17,7 +17,7 @@ class MainSceneViewController: UIViewController {
 	private(set) var router: (NSObjectProtocol & IMainSceneRouter & IMainSceneDataPassing)?
 	var interactor: IMainSceneInteractor?
 
-	private let tableView: UITableView = UITableView()
+	private let tableView = UITableView()
 
 	var viewData: MainSceneModel.ViewModel = MainSceneModel.ViewModel(tasksBySections: [])
 	// MARK: viewDidLoad
