@@ -12,6 +12,7 @@
 
 import UIKit
 
+
 protocol ILoginSceneViewController: AnyObject{
 	func render(viewModel: LoginSceneModels.ViewModel)
 }
@@ -21,6 +22,7 @@ class LoginSceneViewController: UIViewController
 
 	private var interactor: ILoginSceneInteractor?
 	var router: (NSObjectProtocol & ILoginSceneRouter & ILoginSceneDataStore)?
+	let data: ILoginSceneDataStore?
 
 	private var textFieldLogin: UITextField = UITextField()
 	private var textFieldPass: UITextField = UITextField()
@@ -72,12 +74,15 @@ class LoginSceneViewController: UIViewController
 		setupView()
 	}
 
+	// MARK: setupView()
 	private func setupView() {
 		view.backgroundColor = .systemBackground
 		view.addSubview(textFieldLogin)
 		textFieldLogin.autocorrectionType = .no
 		textFieldLogin.autocapitalizationType = .none
 		textFieldLogin.placeholder = "Login"
+		textFieldLogin.layer.borderWidth = 1
+		textFieldLogin.layer.cornerRadius = 10
 		textFieldLogin.translatesAutoresizingMaskIntoConstraints = false
 		textFieldLogin.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
 		textFieldLogin.centerYAnchor.constraint(equalTo: view.centerYAnchor).isActive = true
@@ -88,6 +93,8 @@ class LoginSceneViewController: UIViewController
 		view.addSubview(textFieldPass)
 		textFieldPass.placeholder = "Password"
 		textFieldPass.isSecureTextEntry = true
+		textFieldPass.layer.borderWidth = 1
+		textFieldPass.layer.cornerRadius = 10
 		textFieldPass.autocorrectionType = .no
 		textFieldPass.translatesAutoresizingMaskIntoConstraints = false
 		textFieldPass.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
@@ -99,6 +106,7 @@ class LoginSceneViewController: UIViewController
 		view.addSubview(loginButton)
 
 		loginButton.setTitle("Login", for: .normal)
+		loginButton.setTitleColor(.systemBlue, for: .normal)
 		loginButton.translatesAutoresizingMaskIntoConstraints = false
 		loginButton.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
 		loginButton.topAnchor.constraint(equalTo: textFieldPass.bottomAnchor, constant: 16.0).isActive = true
@@ -113,6 +121,7 @@ class LoginSceneViewController: UIViewController
 	}
 }
 
+// MARK: - extension LoginSceneViewController: ILoginSceneViewController
 extension LoginSceneViewController: ILoginSceneViewController {
 	func render(viewModel: LoginSceneModels.ViewModel) {
 		let alert: UIAlertController

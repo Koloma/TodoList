@@ -28,25 +28,25 @@ class MainSceneRouter: NSObject, IMainSceneRouter, IMainSceneDataPassing
 
 	func routeToLoginScene()
 	{
-		let destinationVC = assemblyMainScreen
-		//var destinationDS = destinationVC.router!.dataStore!
-		//passDataToSomewhere(source: dataStore!, destination: &destinationDS)
-		//navigateToSomewhere(source: viewController, destination: destinationVC)
+		let destinationVC = assemblyMainScreen()
+		var destinationDS = destinationVC.router!.dataStore!
+		passDataToSomewhere(source: dataStore!, destination: &destinationDS)
+		navigateToSomewhere(source: viewController, destination: destinationVC)
 	}
 
 	// MARK: Navigation
-	func navigateToSomewhere(source: LoginSceneViewController, destination: MainSceneViewController)
+	func navigateToSomewhere(source: MainSceneViewController, destination: LoginSceneViewController)
 	{
-	  source.show(destination, sender: nil)
+		source.navigationController?.pushViewController(destination, animated: true)
 	}
 
 	// MARK: Passing data
-//	func passDataToSomewhere(source: LoginSceneDataStore, destination: inout MainSceneDataStore)
-//	{
-//	  destination.name = source.name
-//	}
+	func passDataToSomewhere(source: LoginSceneDataStore, destination: inout MainSceneDataStore)
+	{
+		destination.name = source.name
+	}
 
-	private func assemblyMainScreen() -> UIViewController {
+	private func assemblyMainScreen() -> MainSceneViewController {
 		let viewController = MainSceneViewController()
 		let taskManager = OrderedTaskManager(taskManager: TaskManager())
 		let repository: ITaskRepository = TaskRepositoryStub()

@@ -16,7 +16,9 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 		guard let windowScene = (scene as? UIWindowScene) else { return }
 		let window = UIWindow(windowScene: windowScene)
 
-		window.rootViewController = assemblyLoginScreen()
+		let navigationController = UINavigationController(rootViewController: assemblyLoginScreen())
+		window.rootViewController = navigationController
+
 		
 		self.window = window
 		window.makeKeyAndVisible()
@@ -31,7 +33,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 		let interactor = LoginSceneInteractor(worker: worker, presenter: presenter)
 		let router = LoginSceneRouter(viewController: viewController)
 
-		viewController.router = router
+		//viewController.router = router
 
 		router.viewController = viewController
 
