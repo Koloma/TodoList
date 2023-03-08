@@ -16,33 +16,30 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 		guard let windowScene = (scene as? UIWindowScene) else { return }
 		let window = UIWindow(windowScene: windowScene)
 
-		window.rootViewController = assembly()
+		let navigationController = UINavigationController(rootViewController: assemblyLoginScreen())
+		window.rootViewController = navigationController
+
 		
 		self.window = window
 		window.makeKeyAndVisible()
-
 	}
 
-	private func assembly() -> UIViewController {
 
-		//let storyboard = UIStoryboard(name: "Main", bundle: Bundle.main)
+	private func assemblyLoginScreen() -> LoginSceneViewController {
 
-//		guard let viewController = storyboard.instantiateViewController(withIdentifier: "MainScreenViewController")
-//				as? MainScreenViewController
-//		else {
-//			fatalError("Нету на Main.storyboard MainScreenViewController!")
-//		}
+		let viewController = LoginSceneViewController()
+		let worker = LoginWorker()
+		let presenter = LoginScenePresenter(viewController: viewController)
+		let interactor = LoginSceneInteractor(worker: worker, presenter: presenter)
+		let router = LoginSceneRouter()
 
-		let viewController = MainScreenViewController()
-		let taskManager = OrderedTaskManager(taskManager: TaskManager())
-		let repository: ITaskRepository = TaskRepositoryStub()
-		taskManager.addTasks(tasks: repository.getTasks())
-		let sections = SectionForTaskManagerAdapter(taskManager: taskManager)
+		viewController.router = router
 
-		let presenter = MainPresenter(view: viewController, sectionManager: sections)
-		viewController.presenter = presenter
+		router.viewController = viewController
+		router.dataStore = interactor
 
 		return viewController
 	}
+
 }
 

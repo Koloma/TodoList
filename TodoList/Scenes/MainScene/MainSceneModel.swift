@@ -7,9 +7,17 @@
 
 import Foundation
 
-enum MainModel {
-	/// Структура для передачи данных во View.
-	struct ViewData {
+enum MainSceneModel {
+
+	struct Request {
+		var selectedTaskTitle: String
+	}
+
+	struct Response {
+		var tasks: [Task]
+	}
+
+	struct ViewModel {
 		/// Данные для отображения RegularTask
 		struct RegularTask {
 			let name: String
