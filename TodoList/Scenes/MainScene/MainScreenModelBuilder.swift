@@ -7,7 +7,6 @@
 
 import UIKit
 
-
 /// Протокол для сборки модуля MVP.
 protocol UnitBuilder {
 
@@ -41,6 +40,5 @@ class MainScreenUnitBuilder: UnitBuilder {
 
 		return viewController
 	}
-
 
 }

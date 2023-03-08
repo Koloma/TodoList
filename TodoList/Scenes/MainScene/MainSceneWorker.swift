@@ -12,7 +12,6 @@ public struct MainDTO {
 	var tasks: [Task]
 }
 
-
 /// Интерфейс ILoginWorker.
 protocol IMainSceneWorker {
 	func setComplete(taskTitle: String) -> MainDTO
@@ -53,7 +52,6 @@ final class MainSceneWorker: IMainSceneWorker {
 	}
 
 	func setComplete(taskTitle: String) -> MainDTO {
-
 
 		if let task = tasks.first(where: {$0.title == taskTitle}) {
 			task.setCompleted(!task.isCompleted)

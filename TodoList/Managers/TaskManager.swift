@@ -7,11 +7,10 @@
 
 import Foundation
 
-
 /// Менеджер по управлению списком задач.
 final class TaskManager: ITaskManager {
 
-	private var taskList:[Task] = []
+	private var taskList: [Task] = []
 
 	init() {}
 
@@ -58,4 +57,3 @@ final class TaskManager: ITaskManager {
 		taskList.removeAll { $0.title == task.title }
 	}
 }
-

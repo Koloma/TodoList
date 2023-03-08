@@ -12,7 +12,7 @@
 
 import UIKit
 
-protocol ILoginSceneDataStore{
+protocol ILoginSceneDataStore {
 	var email: String? { get set }
 	var password: String? { get set }
 	var success: Bool? { get set }
@@ -38,7 +38,6 @@ class LoginSceneInteractor: ILoginSceneInteractor, ILoginSceneDataStore {
 		self.worker = worker
 		self.presenter = presenter
 	}
-
 
 	func login(request: LoginSceneModels.Request) {
 		let result = worker.login(login: request.login, password: request.password)

@@ -25,7 +25,6 @@ public struct LoginDTO {
 	var lastLoginDate: Date
 }
 
-
 /// Интерфейс ILoginWorker.
 protocol ILoginWorker {
 	func login(login: String, password: String) -> LoginDTO

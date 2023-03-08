@@ -19,7 +19,6 @@ final class MainScenePresenter: IMainScenePresenter {
 
 	private var taskManager: ITaskManager?
 
-
 	init(view: IMainSceneViewController) {
 		self.view = view
 
@@ -52,7 +51,7 @@ final class MainScenePresenter: IMainScenePresenter {
 	}
 
 	private func mapTasksData(tasks: [Task]) -> [MainSceneModel.ViewModel.Task] {
-		tasks.map{ mapTaskData(task: $0) }
+		tasks.map { mapTaskData(task: $0) }
 	}
 
 	private func mapTaskData(task: Task) -> MainSceneModel.ViewModel.Task {

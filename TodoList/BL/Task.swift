@@ -7,7 +7,6 @@
 
 import Foundation
 
-
 /// Базовый класс задач.
 class Task {
 
@@ -38,12 +37,11 @@ class Task {
 /// Обычные задач.
 final class RegularTask: Task { }
 
-
 /// Важные задачи содержат приоритет и дату окончания.
 final class ImportantTask: Task {
 
 	/// Приоритеты задач.
-	enum TaskPriority: Int{
+	enum TaskPriority: Int {
 		case low
 		case medium
 		case high
@@ -59,24 +57,24 @@ final class ImportantTask: Task {
 	/// Приоритет задач.
 	private(set) var taskPriority: TaskPriority
 
-	///Дата окончания задания (зависит от приоритета).
+	/// Дата окончания задания (зависит от приоритета).
 	var deadLine: Date {
 		switch taskPriority {
 		case .low:
 			return Calendar.current.date(
 				byAdding: .day
-				,value: TaskPriorityDayCount.low.rawValue
-				,to: createDate)!
+				, value: TaskPriorityDayCount.low.rawValue
+				, to: createDate)!
 		case .medium:
 			return Calendar.current.date(
 				byAdding: .day
-				,value: TaskPriorityDayCount.medium.rawValue
-				,to: createDate)!
+				, value: TaskPriorityDayCount.medium.rawValue
+				, to: createDate)!
 		case .high:
 			return Calendar.current.date(
 				byAdding: .day
-				,value: TaskPriorityDayCount.hight.rawValue
-				,to: createDate)!
+				, value: TaskPriorityDayCount.hight.rawValue
+				, to: createDate)!
 		}
 	}
 

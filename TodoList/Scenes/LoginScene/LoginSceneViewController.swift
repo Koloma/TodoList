@@ -12,13 +12,11 @@
 
 import UIKit
 
-
-protocol ILoginSceneViewController: AnyObject{
+protocol ILoginSceneViewController: AnyObject {
 	func render(viewModel: LoginSceneModels.ViewModel)
 }
 
-class LoginSceneViewController: UIViewController
-{
+class LoginSceneViewController: UIViewController {
 
 	private var interactor: ILoginSceneInteractor?
 	var router: (NSObjectProtocol & ILoginSceneRouter & ILoginSceneDataPassing)?
@@ -28,27 +26,24 @@ class LoginSceneViewController: UIViewController
 	private var loginButton: UIButton = UIButton()
 
 	// MARK: Object lifecycle
-	override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?)
-	{
+	override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
 		super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
 		setup()
 	}
 
-	required init?(coder aDecoder: NSCoder)
-	{
+	required init?(coder aDecoder: NSCoder) {
 		super.init(coder: aDecoder)
 		setup()
 	}
 
 	// MARK: Setup
-	private func setup()
-	{
+	private func setup() {
 		let viewController = self
 		let worker = LoginWorker()
 		let presenter = LoginScenePresenter(viewController: viewController)
 		self.interactor = LoginSceneInteractor(worker: worker, presenter: presenter)
 		let router = LoginSceneRouter()
-		
+
 		viewController.router = router
 
 		router.viewController = viewController
@@ -56,8 +51,7 @@ class LoginSceneViewController: UIViewController
 	}
 
 	// MARK: Routing
-	override func prepare(for segue: UIStoryboardSegue, sender: Any?)
-	{
+	override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
 		if let scene = segue.identifier {
 			let selector = NSSelectorFromString("routeTo\(scene)WithSegue:")
 			if let router = router, router.responds(to: selector) {
@@ -67,8 +61,7 @@ class LoginSceneViewController: UIViewController
 	}
 
 	// MARK: View lifecycle
-	override func viewDidLoad()
-	{
+	override func viewDidLoad() {
 		super.viewDidLoad()
 		setupView()
 	}
@@ -113,7 +106,7 @@ class LoginSceneViewController: UIViewController
 		loginButton.addTarget(self, action: #selector(buttonLogin), for: .touchUpInside)
 	}
 
-	@objc func buttonLogin(sender:UIButton) {
+	@objc func buttonLogin(sender: UIButton) {
 		if let email = textFieldLogin.text, let password = textFieldPass.text {
 			let request = LoginSceneModels.Request(login: email, password: password)
 			interactor?.login(request: request)

@@ -20,7 +20,6 @@ class MainSceneViewController: UIViewController {
 	private let tableView: UITableView = UITableView()
 
 	var viewData: MainSceneModel.ViewModel = MainSceneModel.ViewModel(tasksBySections: [])
-	
 	// MARK: viewDidLoad
 	override func viewDidLoad() {
 		super.viewDidLoad()
@@ -56,7 +55,6 @@ extension MainSceneViewController: IMainSceneViewController {
 		tableView.reloadData()
 	}
 }
-
 
 // MARK: extension MainScreenViewController
 extension MainSceneViewController: UITableViewDataSource, UITableViewDelegate {
@@ -95,7 +93,7 @@ extension MainSceneViewController: UITableViewDataSource, UITableViewDelegate {
 
 		switch taskData {
 		case .importantTask(let task):
-			let redText = [NSAttributedString.Key.foregroundColor:  UIColor.red]
+			let redText = [NSAttributedString.Key.foregroundColor: UIColor.red]
 			let taskText = NSMutableAttributedString(string: "\(task.priority) ", attributes: redText )
 			taskText.append(NSAttributedString(string: task.name))
 
@@ -116,4 +114,3 @@ extension MainSceneViewController: UITableViewDataSource, UITableViewDelegate {
 		return cell
 	}
 }
-
