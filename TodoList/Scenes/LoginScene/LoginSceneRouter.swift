@@ -32,7 +32,7 @@ class LoginSceneRouter: NSObject, ILoginSceneRouter, ILoginSceneDataPassing
 		let destinationVC = assemblyMainScreen()
 		guard
 			let sourceVC = viewController,
-			let loginDS = dataStore
+			let _ = dataStore
 			//var destinationDS = destinationVC.router?.dataStore
 		else { fatalError("Fail route to MainSceneViewController")}
 

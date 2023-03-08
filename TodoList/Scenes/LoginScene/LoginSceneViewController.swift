@@ -76,10 +76,6 @@ class LoginSceneViewController: UIViewController
 	// MARK: setupView()
 	private func setupView() {
 		view.backgroundColor = .systemBackground
-#if DEBUG
-		textFieldLogin.text = "Admin"
-		textFieldPass.text = "pa$$32!"
-#endif
 
 		view.addSubview(textFieldLogin)
 		textFieldLogin.autocorrectionType = .no
